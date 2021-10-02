@@ -8,6 +8,7 @@ public class WaveController : MonoBehaviour
     public int m_initialSubWavesCount = 1;
     public float m_restPeriodDuration = 5.0f; // In seconds
     public float m_delayBetweenSubWaves = 2.0f; // In seconds
+    public float m_spawnRadius = 1.0f;
     public Transform[] m_spawnPoints;
     public GameObject[] m_heavyEnemyPrefabs;
     public GameObject[] m_lightEnemyPrefabs;
@@ -68,7 +69,10 @@ public class WaveController : MonoBehaviour
                         prefab = m_lightEnemyPrefabs[lightEnemyIndex];
                 }
 
-                GameObject enemy = Instantiate(prefab, m_spawnPoints[corner].position, m_spawnPoints[corner].rotation);
+                Vector2 rnd = Random.insideUnitCircle;
+                Vector3 offset = new Vector3(rnd.x, 0.0f, rnd.y).normalized * m_spawnRadius + new Vector3(0.0f, 0.1f, 0.0f);
+
+                GameObject enemy = Instantiate(prefab, m_spawnPoints[corner].position + offset, m_spawnPoints[corner].rotation);
                 enemy.GetComponent<EnemyController>().m_waveController = this;
             }    
         }
@@ -92,8 +96,8 @@ public class WaveController : MonoBehaviour
     {
         while (m_subWaveIndex < (m_subWavesCount - 1))
         {
-            m_subWaveIndex++;
             SpawnSubWave();
+            m_subWaveIndex++;
             yield return new WaitForSeconds(m_delayBetweenSubWaves);
         }
     }

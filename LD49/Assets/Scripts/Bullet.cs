@@ -7,7 +7,9 @@ public class Bullet : MonoBehaviour
     public float m_damage = 10.0f;
     public float m_velocity = 20.0f;
     public float m_maxLifeTime = 2.0f;
+    public ParticleSystem m_impactParticleSystem;
 
+    private float m_currentVelocity = 0.0f;
     private Transform m_transform;
     private float m_lifeTime = 0.0f;
 
@@ -26,12 +28,28 @@ public class Bullet : MonoBehaviour
         else
         {
             m_lifeTime += Time.deltaTime;
-            m_transform.position = m_transform.position + m_transform.forward * m_velocity * Time.deltaTime;
+            m_transform.position = m_transform.position + m_transform.forward * m_currentVelocity * Time.deltaTime;
         }
     }
 
     public void ResetState()
     {
+        m_currentVelocity = m_velocity;
         m_lifeTime = 0.0f;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Collided!");
+        m_currentVelocity = 0.0f;
+        StartCoroutine("EmitImpactParticles");
+    }
+
+    IEnumerator EmitImpactParticles()
+    {
+        m_impactParticleSystem.Play();
+        // TODO: reduce hit points
+        yield return new WaitForSeconds(1.0f);
+        gameObject.SetActive(false);
     }
 }
