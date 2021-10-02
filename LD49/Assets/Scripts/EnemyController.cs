@@ -6,8 +6,8 @@ using UnityEngine.InputSystem;
 
 public class EnemyController : MonoBehaviour
 {
-    public Camera m_camera;
-    
+    public WaveController m_waveController;
+
     private NavMeshAgent m_agent;
 
     // Start is called before the first frame update
