@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : VehicleController
 {
-    public float m_movementSpeed = 10.0f;
     public float m_rotationSpeed = 10.0f;
     public float m_dashMultiplier = 2.0f;
     public float m_dashDuration = 0.1f; // In seconds
@@ -33,6 +32,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        m_currentHitPoints = m_maxHitPoints;
         m_currentMovementSpeed = m_movementSpeed;
         m_transform = GetComponent<Transform>();
         m_rigidbody = GetComponent<Rigidbody>();

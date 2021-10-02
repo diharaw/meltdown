@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
     public float m_velocity = 20.0f;
     public float m_maxLifeTime = 2.0f;
     public ParticleSystem m_impactParticleSystem;
+    public LayerMask m_effectiveLayer;
 
     private float m_currentVelocity = 0.0f;
     private Transform m_transform;
@@ -40,8 +41,13 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        m_currentVelocity = 0.0f;
-        StartCoroutine("EmitImpactParticles");
+        if ((1 << collision.gameObject.layer) == m_effectiveLayer.value)
+        {
+            m_currentVelocity = 0.0f;
+            VehicleController controller = collision.gameObject.GetComponent<VehicleController>();
+            controller.TakeDamage(m_damage);
+            StartCoroutine("EmitImpactParticles");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -53,7 +59,6 @@ public class Bullet : MonoBehaviour
     IEnumerator EmitImpactParticles()
     {
         m_impactParticleSystem.Play();
-        // TODO: reduce hit points
         yield return new WaitForSeconds(1.0f);
         gameObject.SetActive(false);
     }

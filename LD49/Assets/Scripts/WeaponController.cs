@@ -9,8 +9,7 @@ public class WeaponController : MonoBehaviour
     public AudioSource m_audioSource;
 
     public float m_timeBetweenShots = 1.0f;
-    public float m_damagePerShot = 1.0f;
-    public int m_effectiveTag = 0;
+    public LayerMask m_effectiveLayer;
 
     // Start is called before the first frame update
     void Start()

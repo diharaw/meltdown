@@ -35,5 +35,6 @@ public class SingleCannonWeaponController : WeaponController
         GameObject bullet = BulletPool.sharedInstance.GetPooledBullet();
         bullet.transform.position = m_muzzleTip.position;
         bullet.transform.rotation = m_muzzleTip.rotation;
+        bullet.GetComponent<Bullet>().m_effectiveLayer = m_effectiveLayer;
     }
 }

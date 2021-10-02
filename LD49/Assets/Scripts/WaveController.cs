@@ -16,7 +16,7 @@ public class WaveController : MonoBehaviour
     private int m_waveIndex = 0;
     private int m_subWaveIndex = 0;
     private int m_remainingWaveUnits = 0;
-    private int m_subWavesCount = 1;
+    private int m_subWavesCount = 0;
     private int m_maxDifficultyWaveCount = 10;
     private bool m_inRestPeriod = false;
 
@@ -40,10 +40,15 @@ public class WaveController : MonoBehaviour
     public void DecrementRemainingEnemies()
     {
         m_remainingWaveUnits--;
+
+        if (m_remainingWaveUnits < 0)
+            m_remainingWaveUnits = 0;
     }
 
     void SpawnSubWave()
     {
+        Debug.Log("Spawning Sub Wave: " + m_subWaveIndex);
+
         float heavyProbabilityThreshold =  (float)m_waveIndex / (float)m_maxDifficultyWaveCount;
 
         for (int corner = 0; corner < 4; corner++)
@@ -84,21 +89,24 @@ public class WaveController : MonoBehaviour
         
         // Start a new wave...
         m_waveIndex++;
-        m_subWavesCount++;
         m_subWaveIndex = 0;
-        m_remainingWaveUnits = m_subWavesCount * m_waveSizePerCorner * 2;
+        m_remainingWaveUnits = m_subWavesCount * m_waveSizePerCorner * 4;
         m_inRestPeriod = false;
+
+        Debug.Log("Starting Wave: " + m_waveIndex);
 
         StartCoroutine("SpawnSubWaves");
     }
 
     IEnumerator SpawnSubWaves()
     {
-        while (m_subWaveIndex < (m_subWavesCount - 1))
+        while (m_subWaveIndex < m_subWavesCount)
         {
             SpawnSubWave();
             m_subWaveIndex++;
             yield return new WaitForSeconds(m_delayBetweenSubWaves);
         }
+
+        m_subWavesCount++;
     }
 }
