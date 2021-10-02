@@ -40,7 +40,12 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collided!");
+        m_currentVelocity = 0.0f;
+        StartCoroutine("EmitImpactParticles");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
         m_currentVelocity = 0.0f;
         StartCoroutine("EmitImpactParticles");
     }
