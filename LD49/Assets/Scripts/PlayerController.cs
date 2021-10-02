@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
 {
     public float m_movementSpeed = 10.0f;
     public float m_rotationSpeed = 10.0f;
+    public float m_dashMultiplier = 2.0f;
+    public float m_dashDuration = 0.1f; // In seconds
+    public float m_dashDelay = 1.0f; // In seconds
     public Transform m_turretBaseTransform;
     public Camera m_camera;
 
@@ -14,10 +17,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody m_rigidbody;
     private Vector3 m_movementDirection;
     private Vector3 m_aimDirection;
+    private float m_currentMovementSpeed;
+    private bool m_dashCooldownInProgress = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        m_currentMovementSpeed = m_movementSpeed;
         m_transform = GetComponent<Transform>();
         m_rigidbody = GetComponent<Rigidbody>();
     }
@@ -30,7 +36,7 @@ public class PlayerController : MonoBehaviour
             Quaternion toRotation = Quaternion.LookRotation(m_movementDirection, Vector3.up);
             m_rigidbody.rotation = Quaternion.RotateTowards(m_rigidbody.rotation, toRotation, m_rotationSpeed * Time.deltaTime);
 
-            m_rigidbody.velocity = m_transform.forward * m_movementSpeed;
+            m_rigidbody.velocity = m_transform.forward * m_currentMovementSpeed;
         }
 
         if (m_aimDirection != Vector3.zero)
@@ -58,9 +64,6 @@ public class PlayerController : MonoBehaviour
         Vector3 screenPos = m_camera.WorldToScreenPoint(m_transform.position);
 
         m_aimDirection = (new Vector3(aim.x, 0.0f, aim.y) - new Vector3(screenPos.x, 0.0f, screenPos.y)).normalized;
-
-        Debug.Log("Mouse Aim " + aim.x + ", " + aim.y);
-        Debug.Log("Screen Pos " + screenPos.x + ", " + screenPos.y);
     }
 
     public void OnFireLeft(InputAction.CallbackContext value)
@@ -75,6 +78,19 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext value)
     {
+        if (!m_dashCooldownInProgress)
+        {
+            m_currentMovementSpeed = m_movementSpeed * m_dashMultiplier;
+            m_dashCooldownInProgress = true;
+            StartCoroutine("DashCooldown");
+        }
+    }
 
+    IEnumerator DashCooldown()
+    {
+        yield return new WaitForSeconds(m_dashDuration);
+        m_currentMovementSpeed = m_movementSpeed;
+        yield return new WaitForSeconds(m_dashDelay);
+        m_dashCooldownInProgress = false;
     }
 }
