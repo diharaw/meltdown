@@ -68,7 +68,7 @@ public class WaveController : MonoBehaviour
                         prefab = m_lightEnemyPrefabs[lightEnemyIndex];
                 }
 
-                GameObject enemy = Instantiate(prefab, m_spawnPoints[corner]);
+                GameObject enemy = Instantiate(prefab, m_spawnPoints[corner].position, m_spawnPoints[corner].rotation);
                 enemy.GetComponent<EnemyController>().m_waveController = this;
             }    
         }

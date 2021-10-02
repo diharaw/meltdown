@@ -52,6 +52,30 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Place Turret",
+                    "type": "Button",
+                    "id": "f319a802-f73f-49cd-bbd0-b3541f9ea2b5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Place Mine",
+                    "type": "Button",
+                    "id": "2f54f105-a147-420d-b002-334c524f10ee",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Cycle Turrets",
+                    "type": "PassThrough",
+                    "id": "86f19fa8-f37b-40f7-8566-75583cfe572c",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -208,6 +232,94 @@
                     "action": "Mouse Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8e07f4d2-3cb5-43cf-a778-39ec3958b76d",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Place Turret",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "72c1d00a-454c-4314-9f87-f264c71fb3ca",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Place Turret",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1a7f00eb-a2f7-465a-80dd-9a3bf0ec4898",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Place Mine",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ba09cfa9-3aea-42dd-b524-18f5f5aa633c",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Place Mine",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c60b55a2-4208-4109-a662-68d1c68d3a77",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "Normalize(min=-120,max=120)",
+                    "groups": "",
+                    "action": "Cycle Turrets",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "4d217af8-c381-4ed7-a34a-6973fe7607d9",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cycle Turrets",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "1c860b60-8b3a-4544-9ff8-9af498843769",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cycle Turrets",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "48eb56bc-6cba-4d2c-b480-019eba2492dc",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cycle Turrets",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

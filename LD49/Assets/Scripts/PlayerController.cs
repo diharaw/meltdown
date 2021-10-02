@@ -12,6 +12,13 @@ public class PlayerController : MonoBehaviour
     public float m_dashDelay = 1.0f; // In seconds
     public Transform m_turretBaseTransform;
     public Camera m_camera;
+    public GameObject[] m_turretPrefabs;
+    public int[] m_turretPowerDrawCost;
+    public int[] m_turretScrapCost;
+    public GameObject m_minePrefab;
+    public PowerPlantController m_powerPlantController;
+    public WeaponController m_leftWeaponController;
+    public WeaponController m_rightWeaponController;
 
     private Transform m_transform;
     private Rigidbody m_rigidbody;
@@ -19,6 +26,9 @@ public class PlayerController : MonoBehaviour
     private Vector3 m_aimDirection;
     private float m_currentMovementSpeed;
     private bool m_dashCooldownInProgress = false;
+    private int m_currentMaxUnlockedTurretIndex = 3;
+    private int m_currentTurretIndex = 0;
+    private int m_availableScrap = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -68,12 +78,18 @@ public class PlayerController : MonoBehaviour
 
     public void OnFireLeft(InputAction.CallbackContext value)
     {
-
+        if (value.started)
+            m_leftWeaponController.StartFiring();
+        else if (value.canceled)
+            m_leftWeaponController.StopFiring();
     }
 
     public void OnFireRight(InputAction.CallbackContext value)
     {
-
+        if (value.started)
+            m_rightWeaponController.StartFiring();
+        else if (value.canceled)
+            m_rightWeaponController.StopFiring();
     }
 
     public void OnDash(InputAction.CallbackContext value)
@@ -84,6 +100,39 @@ public class PlayerController : MonoBehaviour
             m_dashCooldownInProgress = true;
             StartCoroutine("DashCooldown");
         }
+    }
+
+    public void OnCycleTurrets(InputAction.CallbackContext value)
+    {
+        float cycleTurrets = value.ReadValue<float>();
+
+        if (cycleTurrets != 0.0f)
+        {
+            m_currentTurretIndex += (int)cycleTurrets;
+
+            if (m_currentTurretIndex > m_currentMaxUnlockedTurretIndex)
+                m_currentTurretIndex = 0;
+            else if (m_currentTurretIndex < 0)
+                m_currentTurretIndex = m_currentMaxUnlockedTurretIndex;
+        }
+    }
+
+    public void OnPlaceTurret(InputAction.CallbackContext value)
+    {
+        if (value.performed)
+        {
+            // TODO: Check for player scrap
+            if (m_powerPlantController.IncreasePowerDraw(m_turretPowerDrawCost[m_currentTurretIndex]) && m_turretScrapCost[m_currentTurretIndex] < m_availableScrap)
+            {
+                m_availableScrap -= m_turretScrapCost[m_currentTurretIndex];
+                Instantiate(m_turretPrefabs[m_currentTurretIndex], m_transform.position, m_transform.rotation);
+            }
+        }
+    }
+
+    public void OnPlaceMine(InputAction.CallbackContext value)
+    {
+        Debug.Log("Place Mine");
     }
 
     IEnumerator DashCooldown()
