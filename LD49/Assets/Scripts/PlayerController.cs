@@ -47,7 +47,7 @@ public class PlayerController : VehicleController
             Quaternion toRotation = Quaternion.LookRotation(m_movementDirection, Vector3.up);
             m_rigidbody.rotation = Quaternion.RotateTowards(m_rigidbody.rotation, toRotation, m_rotationSpeed * Time.deltaTime);
 
-            m_rigidbody.velocity = m_transform.forward * m_currentMovementSpeed;
+            m_rigidbody.velocity = m_movementDirection * m_currentMovementSpeed;
         }
         else
             m_rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
