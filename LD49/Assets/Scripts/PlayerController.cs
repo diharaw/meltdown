@@ -9,6 +9,7 @@ public class PlayerController : VehicleController
     public float m_dashMultiplier = 2.0f;
     public float m_dashDuration = 0.1f; // In seconds
     public float m_dashDelay = 1.0f; // In seconds
+    public int m_mineScrapCost = 10;
     public Transform m_turretBaseTransform;
     public Camera m_camera;
     public GameObject[] m_turretPrefabs;
@@ -128,7 +129,6 @@ public class PlayerController : VehicleController
     {
         if (value.performed)
         {
-            // TODO: Check for player scrap
             if (m_powerPlantController.IncreasePowerDraw(m_turretPowerDrawCost[m_currentTurretIndex]) && m_turretScrapCost[m_currentTurretIndex] < m_availableScrap)
             {
                 m_availableScrap -= m_turretScrapCost[m_currentTurretIndex];
@@ -139,7 +139,14 @@ public class PlayerController : VehicleController
 
     public void OnPlaceMine(InputAction.CallbackContext value)
     {
-        Debug.Log("Place Mine");
+        if (value.performed)
+        {
+            if (m_mineScrapCost < m_availableScrap)
+            {
+                m_availableScrap -= m_mineScrapCost;
+                Instantiate(m_minePrefab, m_transform.position, Quaternion.identity);
+            }
+        }
     }
 
     IEnumerator DashCooldown()

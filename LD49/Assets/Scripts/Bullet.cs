@@ -10,12 +10,12 @@ public class Bullet : MonoBehaviour
     public ParticleSystem m_impactParticleSystem;
     public LayerMask m_effectiveLayer;
 
-    private float m_currentVelocity = 0.0f;
+    protected float m_currentVelocity = 0.0f;
     private Transform m_transform;
     private float m_lifeTime = 0.0f;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         m_lifeTime = 0.0f;
         m_transform = GetComponent<Transform>();
@@ -39,7 +39,7 @@ public class Bullet : MonoBehaviour
         m_lifeTime = 0.0f;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         if ((1 << collision.gameObject.layer) == m_effectiveLayer.value)
         {
