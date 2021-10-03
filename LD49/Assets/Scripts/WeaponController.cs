@@ -13,7 +13,7 @@ public class WeaponController : MonoBehaviour
     protected bool m_isFiring = false;
 
     // Start is called before the first frame update
-    protected void Start()
+    protected virtual void Start()
     {
         m_audioSource.pitch = m_audioSource.pitch + Random.Range(-0.2f, 0.2f);
     }

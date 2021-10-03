@@ -52,6 +52,22 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        int layer = 1 << LayerMask.NameToLayer("Player");
+
+        if (m_effectiveLayer.value == layer)
+        {
+            if (other.gameObject.tag == "Turret")
+            {
+                TurretController controller = other.gameObject.GetComponent<TurretController>();
+                controller.TakeDamage(m_damage);
+            }
+            else if (other.gameObject.tag == "PowerPlant")
+            {
+                PowerPlantController controller = other.gameObject.GetComponent<PowerPlantController>();
+                controller.TakeDamage(m_damage);
+            }
+        }
+
         m_currentVelocity = 0.0f;
         StartCoroutine("EmitImpactParticles");
     }

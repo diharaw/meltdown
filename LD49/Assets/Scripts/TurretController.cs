@@ -10,6 +10,9 @@ public class TurretController : MonoBehaviour
     public LayerMask m_effectiveLayer;
     public LayerMask m_bulletLayer;
     public WeaponController m_weapon;
+    public GameObject m_root;
+    public ParticleSystem m_destructionParticleSystem;
+    public MeshRenderer m_healthBar;
 
     private float m_hitPoints = 0.0f;
     private Collider[] m_colliderBuffer;
@@ -24,7 +27,7 @@ public class TurretController : MonoBehaviour
         m_colliderBuffer = new Collider[32];
         m_weapon.m_effectiveLayer = m_effectiveLayer;
         float layer = Mathf.Log(m_bulletLayer.value, 2);
-        m_weapon.SetLayer((int) layer);
+        m_weapon.SetLayer((int)layer);
         StartCoroutine("CheckForNearestTarget");
     }
 
@@ -35,18 +38,41 @@ public class TurretController : MonoBehaviour
         {
             if (m_trackedTarget != null && m_trackedTarget.activeInHierarchy)
             {
-                Vector3 aimDirection = (m_trackedTarget.transform.position - transform.position).normalized;
-                Quaternion toRotation = Quaternion.LookRotation(aimDirection, Vector3.up);
-                m_transform.rotation = Quaternion.RotateTowards(m_transform.rotation, toRotation, m_rotationSpeed * Time.deltaTime);
+                Vector3 toTarget = (m_trackedTarget.transform.position - transform.position);
 
-                if (!m_weapon.isFiring())
-                    m_weapon.StartFiring();
+                if (toTarget.magnitude < m_effectiveRadius)
+                {
+                    Vector3 aimDirection = toTarget.normalized;
+                    Quaternion toRotation = Quaternion.LookRotation(aimDirection, Vector3.up);
+                    m_transform.rotation = Quaternion.RotateTowards(m_transform.rotation, toRotation, m_rotationSpeed * Time.deltaTime);
+
+                    if (!m_weapon.isFiring())
+                        m_weapon.StartFiring();
+                }
+                else
+                    m_weapon.StopFiring();
             }
             else
                 m_weapon.StopFiring();
         }
         else
             m_weapon.StopFiring();
+    }
+
+    public void TakeDamage(float dmg)
+    {
+        if (m_root && m_destructionParticleSystem)
+        {
+            m_hitPoints -= dmg;
+
+            if (m_hitPoints < 0.0f)
+            {
+                m_hitPoints = 0.0f;
+                StartCoroutine("EmitDestructionParticles");
+            }
+
+            m_healthBar.material.SetFloat("Health", m_hitPoints / m_maxHitPoints);
+        }
     }
 
     IEnumerator CheckForNearestTarget()
@@ -68,7 +94,17 @@ public class TurretController : MonoBehaviour
                 }
             }
 
+            if (m_trackedTarget != null)
+                Debug.Log("Tracked Target: " + m_trackedTarget.name);
+
             yield return new WaitForSeconds(1.0f);
         }
+    }
+
+    IEnumerator EmitDestructionParticles()
+    {
+        m_destructionParticleSystem.Play();
+        yield return new WaitForSeconds(0.5f);
+        Destroy(m_root);
     }
 }

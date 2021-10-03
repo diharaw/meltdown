@@ -48,6 +48,8 @@ public class PlayerController : VehicleController
 
             m_rigidbody.velocity = m_transform.forward * m_currentMovementSpeed;
         }
+        else
+            m_rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
 
         if (m_aimDirection != Vector3.zero)
         {
@@ -125,7 +127,7 @@ public class PlayerController : VehicleController
             if (m_powerPlantController.IncreasePowerDraw(m_turretPowerDrawCost[m_currentTurretIndex]) && m_turretScrapCost[m_currentTurretIndex] < m_availableScrap)
             {
                 m_availableScrap -= m_turretScrapCost[m_currentTurretIndex];
-                Instantiate(m_turretPrefabs[m_currentTurretIndex], m_transform.position, m_transform.rotation);
+                Instantiate(m_turretPrefabs[m_currentTurretIndex], m_transform.position, Quaternion.identity);
             }
         }
     }

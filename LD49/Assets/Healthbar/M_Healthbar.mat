@@ -33,7 +33,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - Health: 1.11
+    - Health: 1.61
     - Opacity: 0.75
     - OpacityBG: 0.65
     - OpacityFG: 1

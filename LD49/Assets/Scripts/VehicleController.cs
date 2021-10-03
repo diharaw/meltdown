@@ -25,6 +25,6 @@ public class VehicleController : MonoBehaviour
     {
         m_destructionParticleSystem.Play();
         yield return new WaitForSeconds(0.5f);
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }

@@ -26,7 +26,7 @@ public class PowerPlantController : MonoBehaviour
         
     }
 
-    public void DoDamage(int damageAmount)
+    public void TakeDamage(float damageAmount)
     {
         m_hitPoints -= damageAmount;
 
