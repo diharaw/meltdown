@@ -3,7 +3,22 @@ guid: c0a119fa7eaca80489e72ed4dfc2e15e
 ModelImporter:
   serializedVersion: 21100
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lights
+    second: {fileID: 2100000, guid: 4d260eb90a920844fbe48ec9c14cf165, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wallmat2
+    second: {fileID: 2100000, guid: 590cd047eee11aa48ace60f4ab7453ba, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: 107af150762292143a0bbac339e0a358, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
