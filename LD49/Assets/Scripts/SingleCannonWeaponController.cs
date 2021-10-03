@@ -9,6 +9,7 @@ public class SingleCannonWeaponController : WeaponController
     // Start is called before the first frame update
     void Start()
     {
+        base.Start();
         m_animator = GetComponent<Animator>();
     }
 
@@ -20,12 +21,24 @@ public class SingleCannonWeaponController : WeaponController
 
     public override void StartFiring()
     {
-        m_animator.SetBool("isFiring", true);
+        if (!m_animator)
+            m_animator = GetComponent<Animator>();
+
+        if (!m_isFiring)
+        {
+            if (m_animator)
+                m_animator.SetBool("isFiring", true);
+
+            m_isFiring = true;
+        }
     }
 
     public override void StopFiring()
     {
-        m_animator.SetBool("isFiring", false);
+        if (m_animator)
+            m_animator.SetBool("isFiring", false);
+
+        m_isFiring = false;
     }
 
     public override void Fire()
@@ -36,5 +49,6 @@ public class SingleCannonWeaponController : WeaponController
         bullet.transform.position = m_muzzleTip.position;
         bullet.transform.rotation = m_muzzleTip.rotation;
         bullet.GetComponent<Bullet>().m_effectiveLayer = m_effectiveLayer;
+        bullet.layer = gameObject.layer;
     }
 }

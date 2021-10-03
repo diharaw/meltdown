@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class EnergyCannonWeaponController : WeaponController
 {
-    private bool m_isFiring = false;
-
     // Start is called before the first frame update
     void Start()
     {
-
+        base.Start();
     }
 
     // Update is called once per frame
@@ -20,8 +18,11 @@ public class EnergyCannonWeaponController : WeaponController
 
     public override void StartFiring()
     {
-        m_isFiring = true;
-        StartCoroutine("FireBullets");
+        if (!m_isFiring)
+        {
+            m_isFiring = true;
+            StartCoroutine("FireBullets");
+        }
     }
 
     public override void StopFiring()
@@ -43,6 +44,7 @@ public class EnergyCannonWeaponController : WeaponController
             bullet.transform.position = m_muzzleTip.position;
             bullet.transform.rotation = m_muzzleTip.rotation;
             bullet.GetComponent<Bullet>().m_effectiveLayer = m_effectiveLayer;
+            bullet.layer = gameObject.layer;
             yield return new WaitForSeconds(m_timeBetweenShots);
         }
     }

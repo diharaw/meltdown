@@ -382,6 +382,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Weapon_EnergyCannon
       objectReference: {fileID: 0}
+    - target: {fileID: 7624687214800369703, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -6732847587016387108, guid: 19fed1d26ca4b9647b52b972e156e184, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
 --- !u!4 &62771798 stripped
@@ -2159,11 +2163,11 @@ MonoBehaviour:
   m_turretBaseTransform: {fileID: 800979023}
   m_camera: {fileID: 621843233}
   m_turretPrefabs:
-  - {fileID: 4627278911758762696, guid: 938b356c171b19740b329b161836c6f5, type: 3}
-  - {fileID: 3577517109607334697, guid: 11451e4146808714db3167c01a4cc7ae, type: 3}
-  - {fileID: 6529548681871268461, guid: 2d1a75b7347d22e46b86062cf055fddb, type: 3}
-  - {fileID: 1777190176519437052, guid: dd379ea8d15192440a5b03f47d784c7e, type: 3}
-  m_turretPowerDrawCost: 050000000a000000acffffff14000000
+  - {fileID: 6053177250557439992, guid: 0e0a02a41bc6fbb45bd344b21b8e1076, type: 3}
+  - {fileID: 5631995693147720758, guid: 3240ce2b55a4caf41aa97afeec6c2f4f, type: 3}
+  - {fileID: 7835374431001149991, guid: 9fdae69162f637b4e8d822c107cec652, type: 3}
+  - {fileID: 6385240954279824015, guid: da796898ded9c984faf9c304cf9536df, type: 3}
+  m_turretPowerDrawCost: 050000000a0000000f00000014000000
   m_turretScrapCost: 0a000000140000001e00000028000000
   m_minePrefab: {fileID: 0}
   m_powerPlantController: {fileID: 1042392664}
@@ -2298,6 +2302,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4369387368039994976, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -2995232493361255398, guid: 19fed1d26ca4b9647b52b972e156e184, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
 --- !u!4 &4686007376334932407
