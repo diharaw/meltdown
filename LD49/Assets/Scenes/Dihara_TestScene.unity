@@ -542,6 +542,7 @@ GameObject:
   - component: {fileID: 220459581}
   - component: {fileID: 220459580}
   - component: {fileID: 220459582}
+  - component: {fileID: 220459583}
   m_Layer: 0
   m_Name: Globals
   m_TagString: Untagged
@@ -616,6 +617,24 @@ MonoBehaviour:
   - {fileID: 6279188189422341093, guid: 7de5b354c4840b04fbf7ec700becf8c7, type: 3}
   - {fileID: 7051639850739653816, guid: 7cf3b487039ff3c408829fe048d95cac, type: 3}
   - {fileID: 3648498765199407203, guid: 00e28100dedb8d04eaf6768959894a5d, type: 3}
+--- !u!114 &220459583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220459579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd1ffb071bb4a0e46966868a3ec684a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_coolantPickups: []
+  m_coolantPickupPrefab: {fileID: 8292329252878858299, guid: e7539a0325828ee4da88d3ffe5a33624, type: 3}
+  m_coolantPickupPoolCount: 64
+  m_scrapPickups: []
+  m_scrapPickupPrefab: {fileID: 7624041404706110247, guid: 9e6743a366e3dd8448d6cf7adf910d6a, type: 3}
+  m_scrapPickupPoolCount: 64
 --- !u!1 &482714020
 GameObject:
   m_ObjectHideFlags: 0
@@ -2007,7 +2026,7 @@ GameObject:
   - component: {fileID: 3824458732749220460}
   m_Layer: 6
   m_Name: PlayerCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -52,6 +52,9 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag == "Pickup")
+            return;
+
         int layer = 1 << LayerMask.NameToLayer("Player");
 
         if (m_effectiveLayer.value == layer)

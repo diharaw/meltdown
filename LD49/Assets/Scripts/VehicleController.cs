@@ -25,6 +25,21 @@ public class VehicleController : MonoBehaviour
     {
         m_destructionParticleSystem.Play();
         yield return new WaitForSeconds(0.5f);
+
+        // If this is a non-player vehicle (i.e AI) drop pickups
+        if (gameObject.tag != "Player")
+        {
+            float pickupRandomRadius = 2.0f;
+
+            GameObject coolant = PickupPool.sharedInstance.GetPooledCoolantPickup();
+            coolant.transform.position = gameObject.transform.position + new Vector3(Random.Range(-pickupRandomRadius, pickupRandomRadius), 0.0f, Random.Range(-pickupRandomRadius, pickupRandomRadius));
+            coolant.transform.rotation = gameObject.transform.rotation;
+
+            GameObject scrap = PickupPool.sharedInstance.GetPooledScrapPickup();
+            scrap.transform.position = gameObject.transform.position + new Vector3(Random.Range(-pickupRandomRadius, pickupRandomRadius), 0.0f, Random.Range(-pickupRandomRadius, pickupRandomRadius));
+            scrap.transform.rotation = gameObject.transform.rotation;
+        }
+
         Destroy(gameObject);
     }
 }

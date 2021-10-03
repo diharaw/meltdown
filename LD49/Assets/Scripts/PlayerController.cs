@@ -58,6 +58,11 @@ public class PlayerController : VehicleController
         }
     }
 
+    public void AddScrap(int amount)
+    {
+        m_availableScrap += amount;
+    }
+
     public void OnMovement(InputAction.CallbackContext value)
     {
         Vector3 movement = value.ReadValue<Vector2>();

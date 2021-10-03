@@ -37,7 +37,7 @@ public class PowerPlantController : MonoBehaviour
         }
     }
 
-    public void DoRepair(int repairAmount)
+    public void DoRepair(float repairAmount)
     {
         m_hitPoints += repairAmount;
 
