@@ -35,6 +35,7 @@ public class PlayerController : VehicleController
     {
         m_currentHitPoints = m_maxHitPoints;
         m_currentMovementSpeed = m_movementSpeed;
+        UIController.sharedInstance.UpdateHealthBar(m_currentHitPoints / m_maxHitPoints);
         m_transform = GetComponent<Transform>();
         m_rigidbody = GetComponent<Rigidbody>();
     }
@@ -42,6 +43,9 @@ public class PlayerController : VehicleController
     // Update is called once per frame
     void Update()
     {
+        if (Globals.sharedInstance.m_isPaused)
+            return;
+
         if (m_movementDirection != Vector3.zero)
         {
             Quaternion toRotation = Quaternion.LookRotation(m_movementDirection, Vector3.up);
@@ -62,22 +66,32 @@ public class PlayerController : VehicleController
     public void AddScrap(int amount)
     {
         m_availableScrap += amount;
+        UIController.sharedInstance.UpdateScrapTxt(m_availableScrap);
     }
 
     public void OnMovement(InputAction.CallbackContext value)
     {
+        if (Globals.sharedInstance.m_isPaused || Globals.sharedInstance.m_isGameOver)
+            return;
+
         Vector3 movement = value.ReadValue<Vector2>();
         m_movementDirection = new Vector3(movement.x, 0.0f, movement.y).normalized;
     }
 
     public void OnGamepadAim(InputAction.CallbackContext value)
     {
+        if (Globals.sharedInstance.m_isPaused || Globals.sharedInstance.m_isGameOver)
+            return;
+
         Vector3 aim = value.ReadValue<Vector2>();
         m_aimDirection = new Vector3(aim.x, 0.0f, aim.y).normalized;
     }
 
     public void OnMouseAim(InputAction.CallbackContext value)
     {
+        if (Globals.sharedInstance.m_isPaused || Globals.sharedInstance.m_isGameOver)
+            return;
+
         Vector2 aim = value.ReadValue<Vector2>();
         Vector3 screenPos = m_camera.WorldToScreenPoint(m_transform.position);
 
@@ -86,6 +100,9 @@ public class PlayerController : VehicleController
 
     public void OnFireLeft(InputAction.CallbackContext value)
     {
+        if (Globals.sharedInstance.m_isPaused || Globals.sharedInstance.m_isGameOver)
+            return;
+
         if (value.started)
             m_leftWeaponController.StartFiring();
         else if (value.canceled)
@@ -94,6 +111,9 @@ public class PlayerController : VehicleController
 
     public void OnFireRight(InputAction.CallbackContext value)
     {
+        if (Globals.sharedInstance.m_isPaused || Globals.sharedInstance.m_isGameOver)
+            return;
+
         if (value.started)
             m_rightWeaponController.StartFiring();
         else if (value.canceled)
@@ -102,6 +122,9 @@ public class PlayerController : VehicleController
 
     public void OnDash(InputAction.CallbackContext value)
     {
+        if (Globals.sharedInstance.m_isPaused || Globals.sharedInstance.m_isGameOver)
+            return;
+
         if (!m_dashCooldownInProgress)
         {
             m_currentMovementSpeed = m_movementSpeed * m_dashMultiplier;
@@ -112,6 +135,9 @@ public class PlayerController : VehicleController
 
     public void OnCycleTurrets(InputAction.CallbackContext value)
     {
+        if (Globals.sharedInstance.m_isPaused || Globals.sharedInstance.m_isGameOver)
+            return;
+
         float cycleTurrets = value.ReadValue<float>();
 
         if (cycleTurrets != 0.0f)
@@ -127,25 +153,49 @@ public class PlayerController : VehicleController
 
     public void OnPlaceTurret(InputAction.CallbackContext value)
     {
+        if (Globals.sharedInstance.m_isPaused || Globals.sharedInstance.m_isGameOver)
+            return;
+
         if (value.performed)
         {
             if (m_powerPlantController.IncreasePowerDraw(m_turretPowerDrawCost[m_currentTurretIndex]) && m_turretScrapCost[m_currentTurretIndex] < m_availableScrap)
             {
                 m_availableScrap -= m_turretScrapCost[m_currentTurretIndex];
-                Instantiate(m_turretPrefabs[m_currentTurretIndex], m_transform.position, Quaternion.identity);
+                GameObject gb = Instantiate(m_turretPrefabs[m_currentTurretIndex], m_transform.position, Quaternion.identity);
+
+                gb.GetComponentInChildren<TurretController>().m_powerDraw = m_turretPowerDrawCost[m_currentTurretIndex];
+
+                UIController.sharedInstance.UpdateScrapTxt(m_availableScrap);
             }
         }
     }
 
     public void OnPlaceMine(InputAction.CallbackContext value)
     {
+        if (Globals.sharedInstance.m_isPaused || Globals.sharedInstance.m_isGameOver)
+            return;
+
         if (value.performed)
         {
             if (m_mineScrapCost < m_availableScrap)
             {
                 m_availableScrap -= m_mineScrapCost;
                 Instantiate(m_minePrefab, m_transform.position, Quaternion.identity);
+                UIController.sharedInstance.UpdateScrapTxt(m_availableScrap);
             }
+        }
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        base.TakeDamage(damage);
+
+        UIController.sharedInstance.UpdateHealthBar(m_currentHitPoints / m_maxHitPoints);
+
+        if (m_currentHitPoints == 0.0f)
+        {
+            Globals.sharedInstance.m_isGameOver = true;
+            UIController.sharedInstance.m_gameOverPanel.SetActive(true);
         }
     }
 

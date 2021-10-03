@@ -10,7 +10,7 @@ public class CoolantPickup : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            other.gameObject.GetComponent<PlayerController>().m_powerPlantController.DoRepair(m_coolantAmount);
+            PowerPlantController.sharedInstance.DoRepair(m_coolantAmount);
             gameObject.SetActive(false);
         }
     }

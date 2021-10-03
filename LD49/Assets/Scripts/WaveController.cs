@@ -24,11 +24,15 @@ public class WaveController : MonoBehaviour
     void Start()
     {
         m_subWavesCount = m_initialSubWavesCount;
+        UIController.sharedInstance.UpdateWaveTxt(m_waveIndex + 1);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Globals.sharedInstance.m_isPaused)
+            return;
+
         if (!m_inRestPeriod && m_remainingWaveUnits == 0)
         {
             // Start rest period...
@@ -94,6 +98,7 @@ public class WaveController : MonoBehaviour
         m_inRestPeriod = false;
 
         Debug.Log("Starting Wave: " + m_waveIndex);
+        UIController.sharedInstance.UpdateWaveTxt(m_waveIndex + 1);
 
         StartCoroutine("SpawnSubWaves");
     }

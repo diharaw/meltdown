@@ -13,6 +13,7 @@ public class TurretController : MonoBehaviour
     public GameObject m_root;
     public ParticleSystem m_destructionParticleSystem;
     public MeshRenderer m_healthBar;
+    public int m_powerDraw = 0;
 
     private float m_hitPoints = 0.0f;
     private Collider[] m_colliderBuffer;
@@ -34,6 +35,12 @@ public class TurretController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Globals.sharedInstance.m_isGameOver)
+        {
+            m_weapon.StopFiring();
+            return;
+        }
+
         if (m_hitPoints > 0.0f)
         {
             if (m_trackedTarget != null && m_trackedTarget.activeInHierarchy)
@@ -105,6 +112,7 @@ public class TurretController : MonoBehaviour
     {
         m_destructionParticleSystem.Play();
         yield return new WaitForSeconds(0.5f);
+        PowerPlantController.sharedInstance.DecreasePowerDraw(m_powerDraw);
         Destroy(m_root);
     }
 }

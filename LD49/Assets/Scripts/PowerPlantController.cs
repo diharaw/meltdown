@@ -4,45 +4,74 @@ using UnityEngine;
 
 public class PowerPlantController : MonoBehaviour
 {
+    public static PowerPlantController sharedInstance;
+
     public float m_maxHitPoints = 1000.0f;
     public float m_maxPowerDraw = 100.0f;
     public float m_maxPowerDrawDecayRate = 10.0f;
     public float m_baseStabilityDecayRate = 10.0f;
+    public ParticleSystem m_destructionParticleSystem;
+    public AudioSource m_destructionAudioSource;
+    public GameObject m_powerPlantMesh;
+    public ReactorState m_reactorState;
 
     private float m_hitPoints;
     private float m_stabilityDecayRate = 10.0f;
     private float m_powerDraw = 0.0f;
 
+    void Awake()
+    {
+        sharedInstance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         m_hitPoints = m_maxHitPoints;
+        TakeDamage(0);
+        UIController.sharedInstance.UpdateStabilityBar(m_hitPoints / m_maxHitPoints);
+        UIController.sharedInstance.UpdatePowerDrawBar(m_powerDraw / m_maxPowerDraw);
         StartCoroutine("DecrementHitPoints");
     }
 
-    // Update is called once per frame
-    void Update()
+    public bool isDestroyed()
     {
-        
+        return m_hitPoints <= 0.0f;
     }
 
     public void TakeDamage(float damageAmount)
     {
-        m_hitPoints -= damageAmount;
-
-        if (m_hitPoints <= 0.0f)
+        if (!isDestroyed())
         {
-            // TODO: play explosion
-            // TODO: show game over screen
+            m_hitPoints -= damageAmount;
+
+            if (m_hitPoints <= 0.0f)
+            {
+                m_hitPoints = 0.0f;
+                m_destructionParticleSystem.Play();
+                m_destructionAudioSource.Play();
+                m_powerPlantMesh.SetActive(false);
+                Globals.sharedInstance.m_isGameOver = true;
+                UIController.sharedInstance.m_gameOverPanel.SetActive(true);
+            }
+
+            UIController.sharedInstance.UpdateStabilityBar(m_hitPoints / m_maxHitPoints);
+            m_reactorState.SetReactorHealth(m_hitPoints / m_maxHitPoints);
         }
     }
 
     public void DoRepair(float repairAmount)
     {
-        m_hitPoints += repairAmount;
+        if (!isDestroyed())
+        {
+            m_hitPoints += repairAmount;
 
-        if (m_hitPoints > m_maxHitPoints)
-            m_hitPoints = m_maxHitPoints;
+            if (m_hitPoints > m_maxHitPoints)
+                m_hitPoints = m_maxHitPoints;
+
+            UIController.sharedInstance.UpdateStabilityBar(m_hitPoints / m_maxHitPoints);
+            m_reactorState.SetReactorHealth(m_hitPoints / m_maxHitPoints);
+        }
     }
 
     public bool IncreasePowerDraw(int powerUnits)
@@ -50,6 +79,7 @@ public class PowerPlantController : MonoBehaviour
         if (m_powerDraw < m_maxPowerDraw)
         {
             m_powerDraw += powerUnits;
+            UIController.sharedInstance.UpdatePowerDrawBar(m_powerDraw / m_maxPowerDraw);
             return true;
         }
         else
@@ -62,6 +92,8 @@ public class PowerPlantController : MonoBehaviour
 
         if (m_powerDraw < 0.0f)
             m_powerDraw = 0.0f;
+
+        UIController.sharedInstance.UpdatePowerDrawBar(m_powerDraw / m_maxPowerDraw);
     }
 
     IEnumerator DecrementHitPoints()
@@ -77,6 +109,8 @@ public class PowerPlantController : MonoBehaviour
                 // TODO: show game over screen
                 Debug.Log("Power Plant Exploded!");
             }
+
+            UIController.sharedInstance.UpdateStabilityBar(m_hitPoints / m_maxHitPoints);
 
             yield return new WaitForSeconds(1.0f);
         }
