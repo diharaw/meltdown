@@ -32,7 +32,7 @@ public class SingleCannonWeaponController : WeaponController
     {
         m_particleSystem.Play();
         m_audioSource.Play();
-        GameObject bullet = BulletPool.sharedInstance.GetPooledBullet();
+        GameObject bullet = BulletPool.sharedInstance.GetPooledCannonBullet();
         bullet.transform.position = m_muzzleTip.position;
         bullet.transform.rotation = m_muzzleTip.rotation;
         bullet.GetComponent<Bullet>().m_effectiveLayer = m_effectiveLayer;
