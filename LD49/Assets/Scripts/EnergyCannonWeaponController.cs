@@ -38,6 +38,7 @@ public class EnergyCannonWeaponController : WeaponController
         while (m_isFiring)
         {
             m_particleSystem.Play();
+            m_audioSource.Play();
             GameObject bullet = BulletPool.sharedInstance.GetPooledEnergyBullet();
             bullet.transform.position = m_muzzleTip.position;
             bullet.transform.rotation = m_muzzleTip.rotation;

@@ -19557,7 +19557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_particleSystem: {fileID: 7042818525890511320}
   m_muzzleTip: {fileID: 7042818526831709461}
-  m_audioSource: {fileID: 0}
+  m_audioSource: {fileID: 7624687214800369703}
   m_timeBetweenShots: 1
   m_effectiveLayer:
     serializedVersion: 2
