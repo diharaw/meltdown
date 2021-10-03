@@ -62,7 +62,7 @@ public class ReactorState : MonoBehaviour
 
             RingTop.transform.Rotate(0, -1.0f * Mathf.Lerp(ReactorRingsSpinRate * 7.0f, ReactorRingsSpinRate, ReactorHealth) * Time.deltaTime, Mathf.Lerp(Mathf.Sin(Time.time * 30.0f) * 3.0f, 0, ReactorHealth));
 
-            if (ReactorHealth == 1.0f)
+            if (ReactorHealth >= 1.0f)
             {
                 RingBottom.transform.rotation = Quaternion.Euler(0, 0, 0);
                 RingTop.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -80,7 +80,7 @@ public class ReactorState : MonoBehaviour
         {
             ReactorBody.transform.Rotate(0, Mathf.Lerp(Mathf.Sin(Time.time * 30.0f) * 2.0f, 0, ReactorHealth), Mathf.Lerp(Mathf.Sin(Time.time * 20.0f) * 2.0f, 0, ReactorHealth));
 
-            if (ReactorHealth == 1.0f)
+            if (ReactorHealth >= 1.0f)
             {
                 ReactorBody.transform.rotation = Quaternion.Euler(0, 0, 0);                
             }
