@@ -33,7 +33,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - EmissiveBoost: 30.13
+    - EmissiveBoost: 5
+    - Health: 1
     m_Colors:
     - _Color: {r: 0.9056604, g: 0.022783838, b: 0.022783838, a: 0}
   m_BuildTextureStacks: []
