@@ -5,11 +5,11 @@ using UnityEngine;
 public class MinigunWeaponController : WeaponController
 {
     private Animator m_animator;
-    private bool m_isFiring = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        base.Start();
         m_animator = GetComponent<Animator>();
     }
 
@@ -21,17 +21,24 @@ public class MinigunWeaponController : WeaponController
 
     public override void StartFiring()
     {
-        m_animator.SetBool("isFiring", true);
-        m_isFiring = true;
-        m_particleSystem.Play();
-        m_audioSource.Play();
+        if (!m_isFiring)
+        {
+            if (m_animator)
+                m_animator.SetBool("isFiring", true);
 
-        StartCoroutine("FireBullets");
+            m_isFiring = true;
+            m_particleSystem.Play();
+            m_audioSource.Play();
+
+            StartCoroutine("FireBullets");
+        }
     }
 
     public override void StopFiring()
     {
-        m_animator.SetBool("isFiring", false);
+        if (m_animator)
+            m_animator.SetBool("isFiring", false);
+
         m_particleSystem.Stop();
         m_audioSource.Stop();
         m_isFiring = false;
@@ -45,6 +52,7 @@ public class MinigunWeaponController : WeaponController
             bullet.transform.position = m_muzzleTip.position;
             bullet.transform.rotation = m_muzzleTip.rotation;
             bullet.GetComponent<Bullet>().m_effectiveLayer = m_effectiveLayer;
+            bullet.layer = gameObject.layer;
             yield return new WaitForSeconds(m_timeBetweenShots);
         }
     }

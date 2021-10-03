@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 5305916848809854589}
   - component: {fileID: 9083123652179610072}
   - component: {fileID: 6478792688325737746}
-  m_Layer: 0
+  - component: {fileID: 395608714977645934}
+  m_Layer: 6
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,6 +88,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &395608714977645934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821587115611659463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9f4f6bfe61faa444b133f0df12a94b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_effectiveRadius: 10
+  m_maxHitPoints: 100
+  m_rotationSpeed: 500
+  m_effectiveLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  m_bulletLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  m_weapon: {fileID: 5480664811477782358}
 --- !u!1 &4821587116891037293
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,7 +121,7 @@ GameObject:
   - component: {fileID: 5305916849552327895}
   - component: {fileID: 9083123650908687218}
   - component: {fileID: 6478792689202266040}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +204,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5631995693147720757}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Turret_Minigun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +235,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8118887535960023150}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Joint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,6 +267,18 @@ PrefabInstance:
     - target: {fileID: 1359400884005100176, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
       propertyPath: m_Name
       value: Weapon_Minigun
+      objectReference: {fileID: 0}
+    - target: {fileID: 1359400884005100176, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4199790419034788489, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4309869436434118135, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4369387368039994971, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
       propertyPath: m_RootOrder
@@ -301,6 +336,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4369387368039994974, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4369387368039994976, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 9112334131438832117, guid: 19fed1d26ca4b9647b52b972e156e184, type: 2}
+    - target: {fileID: 4846910415368174418, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5048543556644887556, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
 --- !u!4 &5480664811477782354 stripped
@@ -308,3 +359,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4369387368039994971, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
   m_PrefabInstance: {fileID: 8118887536812071177}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5480664811477782358 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4369387368039994975, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
+  m_PrefabInstance: {fileID: 8118887536812071177}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2af836f1deca7a746a75b1f68523229f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

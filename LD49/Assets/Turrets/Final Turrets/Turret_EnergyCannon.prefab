@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4626665616903844960}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Joint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,8 @@ GameObject:
   - component: {fileID: 6851760280225062817}
   - component: {fileID: 7546216829006188548}
   - component: {fileID: 5718862825362678990}
-  m_Layer: 0
+  - component: {fileID: 4214310631666461724}
+  m_Layer: 6
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,6 +119,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4214310631666461724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6079163509013366043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9f4f6bfe61faa444b133f0df12a94b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_effectiveRadius: 10
+  m_maxHitPoints: 100
+  m_rotationSpeed: 500
+  m_effectiveLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  m_bulletLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  m_weapon: {fileID: 1174852653753209301}
 --- !u!1 &6079163509556444533
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,7 +152,7 @@ GameObject:
   - component: {fileID: 6851760280747157455}
   - component: {fileID: 7546216827381065834}
   - component: {fileID: 5718862826958707872}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +235,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6385240954279824014}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Turret_EnergyCannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,6 +264,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4626665616903844960}
     m_Modifications:
+    - target: {fileID: 4686716297705921171, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042818525870841144, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042818525870850684, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042818525870860824, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042818525870868186, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042818526831709462, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7042818527239479406, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -289,6 +336,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Weapon_EnergyCannon
       objectReference: {fileID: 0}
+    - target: {fileID: 7042818527239479407, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7703161611747896975, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8490885085590570417, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8724817378558437189, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8724817378558437194, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
+      propertyPath: m_timeBetweenShots
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
 --- !u!4 &640693462544799473 stripped
@@ -296,3 +363,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7042818527239479406, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
   m_PrefabInstance: {fileID: 7591148595521517215}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1174852653753209301 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8724817378558437194, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
+  m_PrefabInstance: {fileID: 7591148595521517215}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f1ed126c0498fe41b32b6e568ee4d65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
