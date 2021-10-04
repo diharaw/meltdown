@@ -7,11 +7,14 @@ public class GameOverPanel : MonoBehaviour
 {
     public void OnRestartClicked()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void OnQuitClicked()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
 
+        SceneManager.LoadScene(0);
     }
 }

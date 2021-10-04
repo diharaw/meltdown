@@ -8,6 +8,9 @@ public class InstructionPanel : MonoBehaviour
     {
         UIController.sharedInstance.m_instructionPanel1.SetActive(true);
         Globals.sharedInstance.m_isPaused = true;
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     public void OnNextClicked()
@@ -26,5 +29,8 @@ public class InstructionPanel : MonoBehaviour
     {
         UIController.sharedInstance.m_instructionPanel2.SetActive(false);
         Globals.sharedInstance.m_isPaused = false;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 }
