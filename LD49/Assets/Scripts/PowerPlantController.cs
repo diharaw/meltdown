@@ -14,6 +14,7 @@ public class PowerPlantController : MonoBehaviour
     public AudioSource m_destructionAudioSource;
     public GameObject m_powerPlantMesh;
     public ReactorState m_reactorState;
+    public AudioSource m_repairAudioSource;
 
     private float m_hitPoints;
     private float m_stabilityDecayRate = 10.0f;
@@ -73,6 +74,7 @@ public class PowerPlantController : MonoBehaviour
             if (m_hitPoints > m_maxHitPoints)
                 m_hitPoints = m_maxHitPoints;
 
+            m_repairAudioSource.Play();
             UIController.sharedInstance.UpdateStabilityBar(m_hitPoints / m_maxHitPoints);
             m_reactorState.SetReactorHealth(m_hitPoints / m_maxHitPoints);
         }
@@ -105,14 +107,8 @@ public class PowerPlantController : MonoBehaviour
         while (true)
         {
             m_stabilityDecayRate = m_baseStabilityDecayRate + (m_powerDraw / m_maxPowerDraw) * m_maxPowerDrawDecayRate;
-            m_hitPoints -= m_stabilityDecayRate;
 
-            if (m_hitPoints <= 0.0f)
-            {
-                // TODO: play explosion
-                // TODO: show game over screen
-                Debug.Log("Power Plant Exploded!");
-            }
+            TakeDamage(m_stabilityDecayRate);
 
             UIController.sharedInstance.UpdateStabilityBar(m_hitPoints / m_maxHitPoints);
 

@@ -22,6 +22,8 @@ public class PlayerController : VehicleController
     public WeaponController m_rightWeaponController;
     public GameObject m_rightWeapon;
     public AudioSource m_engineAudioSource;
+    public AudioSource m_scrapAudioSource;
+    public AudioSource m_dashAudioSource;
 
     private Transform m_transform;
     private Rigidbody m_rigidbody;
@@ -97,6 +99,7 @@ public class PlayerController : VehicleController
     {
         m_availableScrap += amount;
         UIController.sharedInstance.UpdateScrapTxt(m_availableScrap);
+        m_scrapAudioSource.Play();
     }
 
     public void OnMovement(InputAction.CallbackContext value)
@@ -157,6 +160,7 @@ public class PlayerController : VehicleController
 
         if (!m_dashCooldownInProgress)
         {
+            m_dashAudioSource.Play();
             m_currentMovementSpeed = m_movementSpeed * m_dashMultiplier;
             m_dashCooldownInProgress = true;
             StartCoroutine("DashCooldown");
