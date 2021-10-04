@@ -206,7 +206,7 @@ public class PlayerController : VehicleController
 
         if (value.performed)
         {
-            if (m_powerPlantController.IncreasePowerDraw(m_turretPowerDrawCost[m_currentTurretIndex]) && m_turretScrapCost[m_currentTurretIndex] < m_availableScrap)
+            if (m_powerPlantController.IncreasePowerDraw(m_turretPowerDrawCost[m_currentTurretIndex]) && m_turretScrapCost[m_currentTurretIndex] <= m_availableScrap)
             {
                 m_availableScrap -= m_turretScrapCost[m_currentTurretIndex];
                 GameObject gb = Instantiate(m_turretPrefabs[m_currentTurretIndex], m_transform.position, Quaternion.identity);
@@ -225,7 +225,7 @@ public class PlayerController : VehicleController
 
         if (value.performed)
         {
-            if (m_mineScrapCost < m_availableScrap)
+            if (m_mineScrapCost <= m_availableScrap)
             {
                 m_availableScrap -= m_mineScrapCost;
                 Instantiate(m_minePrefab, m_transform.position, Quaternion.identity);

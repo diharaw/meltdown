@@ -22,30 +22,11 @@ public class VoiceQuips : MonoBehaviour
     {
         if (!m_voiceAudioSource.isPlaying)
         {
-            AudioClip clip = null;
-
-            if (hitPoints >= 0.2f)
-            {
-                float probability = Random.Range(0.0f, 1.0f);
-
-                if (probability > 0.5f)
-                {
-                    if (hitPoints > 0.7f && hitPoints <= 0.75f)
-                        clip = m_reactorHealthClips[0];
-                    else if (hitPoints > 0.45f && hitPoints <= 0.5f)
-                        clip = m_reactorHealthClips[1];
-                    else if (hitPoints > 0.2f && hitPoints <= 0.25f)
-                        clip = m_reactorHealthClips[2]; 
-                }
-            }
-            else
+            if (hitPoints < 0.2f)
             {
                 int index = Random.Range(0, m_reactorHealthCriticalClips.Length);
-                clip = m_reactorHealthCriticalClips[index];
-            }
+                AudioClip clip = m_reactorHealthCriticalClips[index];
 
-            if (clip != null)
-            {
                 m_voiceAudioSource.clip = clip;
                 m_voiceAudioSource.Play();
             }
