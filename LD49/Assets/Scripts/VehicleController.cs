@@ -41,11 +41,9 @@ public class VehicleController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         m_meshGameObject.SetActive(false);
-        
-        yield return new WaitForSeconds(m_destructionAudioSource.clip.length);
 
         // If this is a non-player vehicle (i.e AI) drop pickups
-        if (gameObject.tag != "Player")
+        if (gameObject.tag != "Player" && m_currentHitPoints <= 0.0f)
         {
             float pickupRandomRadius = 2.0f;
 
@@ -57,6 +55,8 @@ public class VehicleController : MonoBehaviour
             scrap.transform.position = gameObject.transform.position + new Vector3(Random.Range(-pickupRandomRadius, pickupRandomRadius), 0.0f, Random.Range(-pickupRandomRadius, pickupRandomRadius));
             scrap.transform.rotation = gameObject.transform.rotation;
         }
+
+        yield return new WaitForSeconds(m_destructionAudioSource.clip.length);
 
         Destroy(gameObject);
     }
