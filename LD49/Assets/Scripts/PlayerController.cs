@@ -10,6 +10,7 @@ public class PlayerController : VehicleController
     public float m_dashMultiplier = 2.0f;
     public float m_dashDuration = 0.1f; // In seconds
     public float m_dashDelay = 1.0f; // In seconds
+    public float m_invulnerabilityDuration = 1.0f; // In seconds
     public int m_mineScrapCost = 10;
     public Transform m_turretBaseTransform;
     public Camera m_camera;
@@ -36,6 +37,7 @@ public class PlayerController : VehicleController
     private const float m_enginePitchDelta = 0.2f;
     private float m_baseEnginePitch;
     private bool m_enginePitchTransition = false;
+    private bool m_invulnerable = false;
 
     // Start is called before the first frame update
     void Start()
@@ -93,6 +95,12 @@ public class PlayerController : VehicleController
             Quaternion toRotation = Quaternion.LookRotation(m_aimDirection, Vector3.up);
             m_turretBaseTransform.rotation = Quaternion.RotateTowards(m_turretBaseTransform.rotation, toRotation, m_rotationSpeed * Time.deltaTime);
         }
+    }
+
+    public void RecoverHealth()
+    {
+        m_currentHitPoints = m_maxHitPoints;
+        UIController.sharedInstance.UpdateHealthBar(m_currentHitPoints / m_maxHitPoints);
     }
 
     public void AddScrap(int amount)
@@ -161,9 +169,11 @@ public class PlayerController : VehicleController
         if (!m_dashCooldownInProgress)
         {
             m_dashAudioSource.Play();
+            m_invulnerable = true;
             m_currentMovementSpeed = m_movementSpeed * m_dashMultiplier;
             m_dashCooldownInProgress = true;
             StartCoroutine("DashCooldown");
+            StartCoroutine("EndInvulnerability");
         }
     }
 
@@ -234,6 +244,9 @@ public class PlayerController : VehicleController
 
     public override void TakeDamage(float damage)
     {
+        if (m_invulnerable)
+            return;
+
         base.TakeDamage(damage);
 
         UIController.sharedInstance.UpdateHealthBar(m_currentHitPoints / m_maxHitPoints);
@@ -274,6 +287,12 @@ public class PlayerController : VehicleController
         m_currentMovementSpeed = m_movementSpeed;
         yield return new WaitForSeconds(m_dashDelay);
         m_dashCooldownInProgress = false;
+    }
+
+    IEnumerator EndInvulnerability()
+    {
+        yield return new WaitForSeconds(m_invulnerabilityDuration);
+        m_invulnerable = false;
     }
 
     IEnumerator RampUpEnginePitch()

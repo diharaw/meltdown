@@ -32,5 +32,7 @@ public class InstructionPanel : MonoBehaviour
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
+
+        WaveController.sharedInstance.StartSpawning();
     }
 }

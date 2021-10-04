@@ -46,6 +46,9 @@ public class UIController : MonoBehaviour
     public TMP_Text m_txtLevel;
     public TMP_Text m_txtScrap;
 
+    public GameObject m_waveStartingPanel;
+    public GameObject m_waveCompletePanel;
+
     public Image[] m_imgTurretIconBG;
 
     void Awake()

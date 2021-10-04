@@ -4,114 +4,116 @@ using UnityEngine;
 
 public class WaveController : MonoBehaviour
 {
-    public int m_waveSizePerCorner = 2;
-    public int m_initialSubWavesCount = 1;
-    public float m_restPeriodDuration = 5.0f; // In seconds
-    public float m_delayBetweenSubWaves = 2.0f; // In seconds
+    public static WaveController sharedInstance;
+
+    public float m_restPeriodDuration = 10.0f; // In seconds
     public float m_spawnRadius = 1.0f;
+    public float m_maxSpawnDelay = 5.0f; // In seconds
     public Transform[] m_spawnPoints;
     public GameObject[] m_heavyEnemyPrefabs;
     public GameObject[] m_lightEnemyPrefabs;
+    public PlayerController m_playerController;
 
+    private int m_maxDifficultyThreshold = 5;
+    private int m_waveEnemyMultiplier = 10;
     private int m_waveIndex = 0;
-    private int m_subWaveIndex = 0;
     private int m_remainingWaveUnits = 0;
-    private int m_subWavesCount = 0;
-    private int m_maxDifficultyWaveCount = 10;
-    private bool m_inRestPeriod = false;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        m_subWavesCount = m_initialSubWavesCount;
-        UIController.sharedInstance.UpdateWaveTxt(m_waveIndex + 1);
+        sharedInstance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StartSpawning()
     {
-        if (Globals.sharedInstance.m_isPaused)
-            return;
-
-        if (!m_inRestPeriod && m_remainingWaveUnits == 0)
-        {
-            // Start rest period...
-            m_inRestPeriod = true;
-            StartCoroutine("RestPeriod");
-        }
+        StartCoroutine("SpawnWave");
     }
 
     public void DecrementRemainingEnemies()
     {
-        m_remainingWaveUnits--;
-
-        if (m_remainingWaveUnits < 0)
-            m_remainingWaveUnits = 0;
-    }
-
-    void SpawnSubWave()
-    {
-        Debug.Log("Spawning Sub Wave: " + m_subWaveIndex);
-
-        float heavyProbabilityThreshold =  (float)m_waveIndex / (float)m_maxDifficultyWaveCount;
-
-        for (int corner = 0; corner < 4; corner++)
+        if (m_remainingWaveUnits > 0)
         {
-            for (int i = 0; i < m_waveSizePerCorner; i++)
-            {
-                GameObject prefab = null;
+            m_remainingWaveUnits--;
 
-                int lightEnemyIndex = Random.Range(0, m_lightEnemyPrefabs.Length - 1);
-                int heavyEnemyIndex = Random.Range(0, m_heavyEnemyPrefabs.Length - 1);
-
-                if (m_subWaveIndex == 0)
-                    prefab = m_lightEnemyPrefabs[lightEnemyIndex];
-                else if (m_subWaveIndex == m_subWavesCount - 1)
-                    prefab = m_heavyEnemyPrefabs[heavyEnemyIndex];
-                else
-                {
-                    float heavyProbability = Random.Range(0.0f, 1.0f);
-
-                    if (heavyProbability < heavyProbabilityThreshold)
-                        prefab = m_heavyEnemyPrefabs[heavyEnemyIndex];
-                    else
-                        prefab = m_lightEnemyPrefabs[lightEnemyIndex];
-                }
-
-                Vector2 rnd = Random.insideUnitCircle;
-                Vector3 offset = new Vector3(rnd.x, 0.0f, rnd.y).normalized * m_spawnRadius + new Vector3(0.0f, 0.1f, 0.0f);
-
-                GameObject enemy = Instantiate(prefab, m_spawnPoints[corner].position + offset, m_spawnPoints[corner].rotation);
-                enemy.GetComponent<EnemyController>().m_waveController = this;
-            }    
+            if (m_remainingWaveUnits == 0)
+                StartCoroutine("RestPeriod");
         }
     }
 
     IEnumerator RestPeriod()
     {
+        Debug.Log("Wave Ended. Rest Period...");
+
+        m_playerController.RecoverHealth();
+
+        StartCoroutine("ShowAndHideWaveCompletePanel");
+
         yield return new WaitForSeconds(m_restPeriodDuration);
-        
-        // Start a new wave...
-        m_waveIndex++;
-        m_subWaveIndex = 0;
-        m_remainingWaveUnits = m_subWavesCount * m_waveSizePerCorner * 4;
-        m_inRestPeriod = false;
 
-        Debug.Log("Starting Wave: " + m_waveIndex);
-        UIController.sharedInstance.UpdateWaveTxt(m_waveIndex + 1);
-
-        StartCoroutine("SpawnSubWaves");
+        StartCoroutine("SpawnWave");
     }
 
-    IEnumerator SpawnSubWaves()
+    IEnumerator SpawnWave()
     {
-        while (m_subWaveIndex < m_subWavesCount)
+        UIController.sharedInstance.UpdateWaveTxt(m_waveIndex);
+
+        Debug.Log("Starting Wave: " + m_waveIndex);
+
+        StartCoroutine("ShowAndHideWaveStartingPanel");
+
+        int enemiesToSpawn = m_waveEnemyMultiplier * (m_waveIndex + 1);
+        float heavyProbabilityThreshold = (float)m_waveIndex / (float)m_maxDifficultyThreshold;
+        m_remainingWaveUnits = enemiesToSpawn;
+
+        for (int i = 0; i < enemiesToSpawn; i++)
         {
-            SpawnSubWave();
-            m_subWaveIndex++;
-            yield return new WaitForSeconds(m_delayBetweenSubWaves);
+            GameObject prefab = null;
+
+            int lightEnemyIndex = Random.Range(0, m_lightEnemyPrefabs.Length - 1);
+            int heavyEnemyIndex = Random.Range(0, m_heavyEnemyPrefabs.Length - 1);
+            int spawnPointIndex = Random.Range(0, m_spawnPoints.Length - 1);
+
+            float heavyProbability = Random.Range(0.0f, 1.0f);
+
+            if (heavyProbability < heavyProbabilityThreshold)
+                prefab = m_heavyEnemyPrefabs[heavyEnemyIndex];
+            else
+                prefab = m_lightEnemyPrefabs[lightEnemyIndex];
+
+            Vector2 rnd = Random.insideUnitCircle;
+            Vector3 offset = new Vector3(rnd.x, 0.0f, rnd.y).normalized * m_spawnRadius + new Vector3(0.0f, 0.1f, 0.0f);
+
+            Instantiate(prefab, m_spawnPoints[spawnPointIndex].position + offset, m_spawnPoints[spawnPointIndex].rotation);
+
+            float delayProbability = Random.Range(0.0f, 1.0f);
+
+            if (delayProbability > 0.5f)
+            {
+                float spawnDelay = Random.Range(0.1f, m_maxSpawnDelay);
+
+                yield return new WaitForSeconds(spawnDelay);
+            }
         }
 
-        m_subWavesCount++;
+        m_waveIndex++;
+    }
+
+    IEnumerator ShowAndHideWaveStartingPanel()
+    {
+        UIController.sharedInstance.m_waveStartingPanel.SetActive(true);
+
+        yield return new WaitForSeconds(2.0f);
+
+        UIController.sharedInstance.m_waveStartingPanel.SetActive(false);
+    }
+
+    IEnumerator ShowAndHideWaveCompletePanel()
+    {
+        UIController.sharedInstance.m_waveCompletePanel.SetActive(true);
+
+        yield return new WaitForSeconds(2.0f);
+
+        UIController.sharedInstance.m_waveCompletePanel.SetActive(false);
     }
 }

@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 public class EnemyController : VehicleController
 {
-    public WaveController m_waveController;
     public AudioSource m_engineAudioSource;
     
     private NavMeshAgent m_agent;
@@ -30,14 +29,19 @@ public class EnemyController : VehicleController
 
     public override void TakeDamage(float damage)
     {
-        m_currentHitPoints -= damage;
-
-        if (m_currentHitPoints < 0.0f)
+        if (m_currentHitPoints > 0.0f)
         {
-            m_currentHitPoints = 0.0f;
-            m_waveController.DecrementRemainingEnemies();
-            Globals.sharedInstance.AddXp();
-            StartCoroutine("EmitDestructionParticles");
+            m_currentHitPoints -= damage;
+
+            if (m_currentHitPoints < 0.0f)
+                m_currentHitPoints = 0.0f;
+
+            if (m_currentHitPoints == 0.0f)
+            {
+                WaveController.sharedInstance.DecrementRemainingEnemies();
+                Globals.sharedInstance.AddXp();
+                StartCoroutine("EmitDestructionParticles");
+            }
         }
     }
 }
