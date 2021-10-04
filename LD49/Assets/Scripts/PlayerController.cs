@@ -19,6 +19,7 @@ public class PlayerController : VehicleController
     public PowerPlantController m_powerPlantController;
     public WeaponController m_leftWeaponController;
     public WeaponController m_rightWeaponController;
+    public GameObject m_rightWeapon;
 
     private Transform m_transform;
     private Rigidbody m_rigidbody;
@@ -26,7 +27,6 @@ public class PlayerController : VehicleController
     private Vector3 m_aimDirection;
     private float m_currentMovementSpeed;
     private bool m_dashCooldownInProgress = false;
-    private int m_currentMaxUnlockedTurretIndex = 3;
     private int m_currentTurretIndex = 0;
     private int m_availableScrap = 100;
 
@@ -36,13 +36,29 @@ public class PlayerController : VehicleController
         m_currentHitPoints = m_maxHitPoints;
         m_currentMovementSpeed = m_movementSpeed;
         UIController.sharedInstance.UpdateHealthBar(m_currentHitPoints / m_maxHitPoints);
+        UIController.sharedInstance.HighlightTurretIcon(m_currentTurretIndex);
         m_transform = GetComponent<Transform>();
         m_rigidbody = GetComponent<Rigidbody>();
+        m_rightWeapon.SetActive(false);
+        UIController.sharedInstance.UpdateXpBar(0);
+        UIController.sharedInstance.UpdateLevelTxt(1);
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Unlock energy weapon if level if met 
+        if (Globals.sharedInstance.m_level >= 2)
+            m_rightWeapon.SetActive(true);
+
+        if (Globals.sharedInstance.m_isGameOver)
+        {
+            m_leftWeaponController.StopFiring();
+            m_rightWeaponController.StopFiring();
+            m_rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+            return;
+        }
+
         if (Globals.sharedInstance.m_isPaused)
             return;
 
@@ -111,7 +127,7 @@ public class PlayerController : VehicleController
 
     public void OnFireRight(InputAction.CallbackContext value)
     {
-        if (Globals.sharedInstance.m_isPaused || Globals.sharedInstance.m_isGameOver)
+        if (Globals.sharedInstance.m_level < 2 || Globals.sharedInstance.m_isPaused || Globals.sharedInstance.m_isGameOver)
             return;
 
         if (value.started)
@@ -144,10 +160,14 @@ public class PlayerController : VehicleController
         {
             m_currentTurretIndex += (int)cycleTurrets;
 
-            if (m_currentTurretIndex > m_currentMaxUnlockedTurretIndex)
+            if (m_currentTurretIndex > Globals.sharedInstance.m_currentMaxUnlockedTurretIndex)
                 m_currentTurretIndex = 0;
             else if (m_currentTurretIndex < 0)
-                m_currentTurretIndex = m_currentMaxUnlockedTurretIndex;
+                m_currentTurretIndex = Globals.sharedInstance.m_currentMaxUnlockedTurretIndex;
+            else if (Globals.sharedInstance.m_currentMaxUnlockedTurretIndex == 0)
+                m_currentTurretIndex = 0;
+            
+            UIController.sharedInstance.HighlightTurretIcon(m_currentTurretIndex);
         }
     }
 
@@ -172,7 +192,7 @@ public class PlayerController : VehicleController
 
     public void OnPlaceMine(InputAction.CallbackContext value)
     {
-        if (Globals.sharedInstance.m_isPaused || Globals.sharedInstance.m_isGameOver)
+        if (Globals.sharedInstance.m_level < 3 || Globals.sharedInstance.m_isPaused || Globals.sharedInstance.m_isGameOver)
             return;
 
         if (value.performed)
@@ -196,6 +216,7 @@ public class PlayerController : VehicleController
         {
             Globals.sharedInstance.m_isGameOver = true;
             UIController.sharedInstance.m_gameOverPanel.SetActive(true);
+            UIController.sharedInstance.m_txtGameOverScore.text = Globals.sharedInstance.m_xp.ToString();
         }
     }
 

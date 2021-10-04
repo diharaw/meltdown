@@ -32,6 +32,7 @@ public class EnemyController : VehicleController
         {
             m_currentHitPoints = 0.0f;
             m_waveController.DecrementRemainingEnemies();
+            Globals.sharedInstance.AddXp();
             StartCoroutine("EmitDestructionParticles");
         }
     }

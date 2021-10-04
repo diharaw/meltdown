@@ -53,6 +53,7 @@ public class PowerPlantController : MonoBehaviour
                 m_powerPlantMesh.SetActive(false);
                 Globals.sharedInstance.m_isGameOver = true;
                 UIController.sharedInstance.m_gameOverPanel.SetActive(true);
+                UIController.sharedInstance.m_txtGameOverScore.text = Globals.sharedInstance.m_xp.ToString();
             }
 
             UIController.sharedInstance.UpdateStabilityBar(m_hitPoints / m_maxHitPoints);

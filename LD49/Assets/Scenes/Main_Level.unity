@@ -1695,18 +1695,20 @@ MonoBehaviour:
   m_imgXpFill: {fileID: 4023258256495624451}
   m_imgHealthFill: {fileID: 4023258255611303315}
   m_imgPowerDrawFill: {fileID: 4023258255768853850}
-  m_imgPlayerCannon: {fileID: 4023258256078995220}
-  m_imgPlayerDualCannon: {fileID: 4023258254986662789}
-  m_imgPlayerMinigun: {fileID: 4023258256645519048}
-  m_imgPlayerEnergyCannon: {fileID: 4023258255840287925}
-  m_imgTurretCannon: {fileID: 4023258254989866670}
-  m_imgTurretDualCannon: {fileID: 4023258255288477401}
-  m_imgTurretMinigun: {fileID: 4023258255432524629}
-  m_imgTurretEnergyCannon: {fileID: 4023258255453112630}
-  m_imgDisabledTurretCannon: {fileID: 4023258254772234473}
-  m_imgDisabledTurretDualCannon: {fileID: 4023258254841808552}
-  m_imgDisabledTurretMinigun: {fileID: 4023258255095715345}
-  m_imgDisabledTurretEnergyCannon: {fileID: 4023258255313159301}
+  m_playerCannon: {fileID: 4023258256078995242}
+  m_playerDualCannon: {fileID: 4023258254986662811}
+  m_playerMinigun: {fileID: 4023258256645519054}
+  m_playerEnergyCannon: {fileID: 4023258255840287947}
+  m_turretCannon: {fileID: 4023258254989866668}
+  m_turretDualCannon: {fileID: 4023258255288477407}
+  m_turretMinigun: {fileID: 4023258255432524651}
+  m_turretEnergyCannon: {fileID: 4023258255453112628}
+  m_mine: {fileID: 4023258254782135685}
+  m_disabledTurretCannon: {fileID: 4023258254772234479}
+  m_disabledTurretDualCannon: {fileID: 4023258254841808558}
+  m_disabledTurretMinigun: {fileID: 4023258255095715351}
+  m_disabledTurretEnergyCannon: {fileID: 4023258255313159323}
+  m_disabledMine: {fileID: 4023258254610485556}
   m_instructionPanel1: {fileID: 6587476007665272673}
   m_instructionPanel2: {fileID: 7877128782470292502}
   m_btnInstructionPanel1Next: {fileID: 6923986777917277974}
@@ -1720,6 +1722,11 @@ MonoBehaviour:
   m_txtScore: {fileID: 4023258254663052788}
   m_txtLevel: {fileID: 8791965307878362146}
   m_txtScrap: {fileID: 6458685347759075484}
+  m_imgTurretIconBG:
+  - {fileID: 4023258254938197977}
+  - {fileID: 4023258256629019991}
+  - {fileID: 4023258256003130581}
+  - {fileID: 4023258256208311274}
 --- !u!114 &582831699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1734,6 +1741,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isPaused: 0
   m_isGameOver: 0
+  m_level: 1
+  m_currentMaxUnlockedTurretIndex: 0
+  m_xp: 0
+  m_xpIncrementPerKill: 50
 --- !u!1 &621843231
 GameObject:
   m_ObjectHideFlags: 0
@@ -3056,6 +3067,7 @@ MonoBehaviour:
   m_powerPlantController: {fileID: 1085115251}
   m_leftWeaponController: {fileID: 1776834885}
   m_rightWeaponController: {fileID: 1349475681}
+  m_rightWeapon: {fileID: 1962373796}
 --- !u!65 &1024890379
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5651,6 +5663,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1962373796 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7042818527239479407, guid: e2e0a6f9cadd53e43a768017c6734771, type: 3}
+  m_PrefabInstance: {fileID: 1349475680}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2032178345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8809,7 +8826,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &4023258254782135686
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11236,7 +11253,7 @@ MonoBehaviour:
   m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!114 &4023258255618885284
@@ -11747,7 +11764,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &4023258255841761257
 CanvasRenderer:
   m_ObjectHideFlags: 0

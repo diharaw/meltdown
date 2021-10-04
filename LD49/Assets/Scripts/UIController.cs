@@ -13,20 +13,22 @@ public class UIController : MonoBehaviour
     public Image m_imgHealthFill;
     public Image m_imgPowerDrawFill;
 
-    public Image m_imgPlayerCannon;
-    public Image m_imgPlayerDualCannon;
-    public Image m_imgPlayerMinigun;
-    public Image m_imgPlayerEnergyCannon;
+    public GameObject m_playerCannon;
+    public GameObject m_playerDualCannon;
+    public GameObject m_playerMinigun;
+    public GameObject m_playerEnergyCannon;
 
-    public Image m_imgTurretCannon;
-    public Image m_imgTurretDualCannon;
-    public Image m_imgTurretMinigun;
-    public Image m_imgTurretEnergyCannon;
+    public GameObject m_turretCannon;
+    public GameObject m_turretDualCannon;
+    public GameObject m_turretMinigun;
+    public GameObject m_turretEnergyCannon;
+    public GameObject m_mine;
 
-    public Image m_imgDisabledTurretCannon;
-    public Image m_imgDisabledTurretDualCannon;
-    public Image m_imgDisabledTurretMinigun;
-    public Image m_imgDisabledTurretEnergyCannon;
+    public GameObject m_disabledTurretCannon;
+    public GameObject m_disabledTurretDualCannon;
+    public GameObject m_disabledTurretMinigun;
+    public GameObject m_disabledTurretEnergyCannon;
+    public GameObject m_disabledMine;
 
     public GameObject m_instructionPanel1;
     public GameObject m_instructionPanel2;
@@ -44,9 +46,22 @@ public class UIController : MonoBehaviour
     public TMP_Text m_txtLevel;
     public TMP_Text m_txtScrap;
 
+    public Image[] m_imgTurretIconBG;
+
     void Awake()
     {
         sharedInstance = this;
+    }
+
+    public void HighlightTurretIcon(int index)
+    {
+        for (int i = 0; i <4; i++)
+        {
+            if (i == index)
+                m_imgTurretIconBG[i].color = Color.black;
+            else
+                m_imgTurretIconBG[i].color = Color.white;
+        }
     }
 
     public void UpdateHealthBar(float value)
@@ -64,6 +79,11 @@ public class UIController : MonoBehaviour
     public void UpdateScoreTxt(int score)
     {
         UIController.sharedInstance.m_txtScore.text = score.ToString();
+    }
+
+    public void UpdateLevelTxt(int level)
+    {
+        UIController.sharedInstance.m_txtLevel.text = level.ToString();
     }
 
     public void UpdateWaveTxt(int wave)
