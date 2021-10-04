@@ -4403,6 +4403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_destructionParticleSystem: {fileID: 0}
+  m_meshGameObject: {fileID: 0}
   m_maxHitPoints: 100
   m_movementSpeed: 10
   m_waveController: {fileID: 0}
