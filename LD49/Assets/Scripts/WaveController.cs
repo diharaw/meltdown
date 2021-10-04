@@ -56,7 +56,7 @@ public class WaveController : MonoBehaviour
 
     IEnumerator SpawnWave()
     {
-        UIController.sharedInstance.UpdateWaveTxt(m_waveIndex);
+        UIController.sharedInstance.UpdateWaveTxt(m_waveIndex + 1);
 
         Debug.Log("Starting Wave: " + m_waveIndex);
 
