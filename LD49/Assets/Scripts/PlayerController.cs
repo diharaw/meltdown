@@ -249,6 +249,7 @@ public class PlayerController : VehicleController
 
         base.TakeDamage(damage);
 
+        VoiceQuips.sharedInstance.PlayPlayerHealthClip();
         UIController.sharedInstance.UpdateHealthBar(m_currentHitPoints / m_maxHitPoints);
 
         if (m_currentHitPoints == 0.0f)

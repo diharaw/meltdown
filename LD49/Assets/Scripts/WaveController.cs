@@ -45,6 +45,7 @@ public class WaveController : MonoBehaviour
     {
         Debug.Log("Wave Ended. Rest Period...");
 
+        VoiceQuips.sharedInstance.PlayWaveCompleteClip();
         m_playerController.RecoverHealth();
 
         StartCoroutine("ShowAndHideWaveCompletePanel");

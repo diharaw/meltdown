@@ -62,6 +62,7 @@ public class PowerPlantController : MonoBehaviour
 
             UIController.sharedInstance.UpdateStabilityBar(m_hitPoints / m_maxHitPoints);
             m_reactorState.SetReactorHealth(m_hitPoints / m_maxHitPoints);
+            VoiceQuips.sharedInstance.PlayReactorHealthClip(m_hitPoints / m_maxHitPoints);
         }
     }
 

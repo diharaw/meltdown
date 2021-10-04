@@ -41,6 +41,7 @@ public class Globals : MonoBehaviour
         if (m_level < 10 && m_xp >= m_xpLut[m_level])
         {
             m_level++;
+            VoiceQuips.sharedInstance.PlayLevelUpClip();
             unlockUpgrades();
         }
 
