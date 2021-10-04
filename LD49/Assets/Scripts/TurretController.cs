@@ -51,6 +51,18 @@ public class TurretController : MonoBehaviour
         {
             if (m_trackedTarget != null && m_trackedTarget.activeInHierarchy)
             {
+                VehicleController vehicle = m_trackedTarget.GetComponent<VehicleController>();
+
+                if (vehicle)
+                {
+                    if (vehicle.IsDestroyed())
+                    {
+                        m_weapon.StopFiring();
+                        m_trackedTarget = null;
+                        return;
+                    }
+                }
+
                 Vector3 toTarget = (m_trackedTarget.transform.position - transform.position);
 
                 if (toTarget.magnitude < m_effectiveRadius)

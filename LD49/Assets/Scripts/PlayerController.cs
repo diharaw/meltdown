@@ -21,6 +21,7 @@ public class PlayerController : VehicleController
     public WeaponController m_leftWeaponController;
     public WeaponController m_rightWeaponController;
     public GameObject m_rightWeapon;
+    public AudioSource m_engineAudioSource;
 
     private Transform m_transform;
     private Rigidbody m_rigidbody;
@@ -30,10 +31,14 @@ public class PlayerController : VehicleController
     private bool m_dashCooldownInProgress = false;
     private int m_currentTurretIndex = 0;
     private int m_availableScrap = 100;
+    private const float m_enginePitchDelta = 0.2f;
+    private float m_baseEnginePitch;
+    private bool m_enginePitchTransition = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        m_baseEnginePitch = m_engineAudioSource.pitch;
         m_currentHitPoints = m_maxHitPoints;
         m_currentMovementSpeed = m_movementSpeed;
         UIController.sharedInstance.UpdateHealthBar(m_currentHitPoints / m_maxHitPoints);
@@ -60,6 +65,7 @@ public class PlayerController : VehicleController
             m_leftWeaponController.StopFiring();
             m_rightWeaponController.StopFiring();
             m_rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+            StartRampDownEnginePitch();
             return;
         }
 
@@ -72,9 +78,13 @@ public class PlayerController : VehicleController
             m_rigidbody.rotation = Quaternion.RotateTowards(m_rigidbody.rotation, toRotation, m_rotationSpeed * Time.deltaTime);
 
             m_rigidbody.velocity = m_movementDirection * m_currentMovementSpeed;
+            StartRampUpEnginePitch();
         }
         else
+        {
             m_rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+            StartRampDownEnginePitch();
+        }
 
         if (m_aimDirection != Vector3.zero)
         {
@@ -235,11 +245,59 @@ public class PlayerController : VehicleController
         }
     }
 
+    void StartRampUpEnginePitch()
+    {
+        if (!m_enginePitchTransition && m_engineAudioSource.pitch < (m_baseEnginePitch + m_enginePitchDelta))
+        {
+            m_enginePitchTransition = true;
+            StartCoroutine("RampUpEnginePitch");
+        }
+    }
+
+    void StartRampDownEnginePitch()
+    {
+        if (!m_enginePitchTransition && m_engineAudioSource.pitch > m_baseEnginePitch)
+        {
+            m_enginePitchTransition = true;
+            StartCoroutine("RampDownEnginePitch");
+        }
+    }
+
+
     IEnumerator DashCooldown()
     {
         yield return new WaitForSeconds(m_dashDuration);
         m_currentMovementSpeed = m_movementSpeed;
         yield return new WaitForSeconds(m_dashDelay);
         m_dashCooldownInProgress = false;
+    }
+
+    IEnumerator RampUpEnginePitch()
+    {
+        float pitch = 0.0f;
+
+        while (pitch < m_enginePitchDelta)
+        {
+            pitch += 0.05f;
+            m_engineAudioSource.pitch = m_baseEnginePitch + pitch;
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        m_enginePitchTransition = false;
+    }
+
+    IEnumerator RampDownEnginePitch()
+    {
+        float pitch = 0.0f;
+        float curretPitch = m_engineAudioSource.pitch;
+
+        while (pitch < m_enginePitchDelta)
+        {
+            pitch += 0.05f;
+            m_engineAudioSource.pitch = curretPitch - pitch;
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        m_enginePitchTransition = false;
     }
 }

@@ -12,6 +12,11 @@ public class VehicleController : MonoBehaviour
     protected float m_currentHitPoints;
     protected AudioSource m_destructionAudioSource;
 
+    public bool IsDestroyed()
+    {
+        return m_currentHitPoints <= 0.0f;
+    }
+
     public virtual void TakeDamage(float damage)
     {
         if (m_currentHitPoints > 0.0f)

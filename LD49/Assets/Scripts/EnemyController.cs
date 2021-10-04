@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class EnemyController : VehicleController
 {
     public WaveController m_waveController;
+    public AudioSource m_engineAudioSource;
     
     private NavMeshAgent m_agent;
     private float m_targetRadius = 5.0f;
@@ -18,6 +19,7 @@ public class EnemyController : VehicleController
         m_agent = GetComponent<NavMeshAgent>();
         m_destructionAudioSource = GetComponent<AudioSource>();
         m_destructionAudioSource.pitch = m_destructionAudioSource.pitch + Random.Range(-0.2f, 0.2f);
+        m_engineAudioSource.pitch = m_destructionAudioSource.pitch + Random.Range(-0.2f, 0.2f);
 
         Vector2 rnd = Random.insideUnitCircle;
         Vector3 offset = new Vector3(rnd.x, 0.0f, rnd.y).normalized * m_targetRadius;
