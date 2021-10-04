@@ -20,27 +20,27 @@ public class VoiceQuips : MonoBehaviour
 
     public void PlayReactorHealthClip(float hitPoints)
     {
-        if (!m_voiceAudioSource.isPlaying)
+        if (!m_voiceAudioSource.isPlaying && hitPoints >= 0.25f)
+            m_voiceAudioSource.Stop();
+
+        AudioClip clip = null;
+
+        if (hitPoints > 0.7f && hitPoints <= 0.75f)
+            clip = m_reactorHealthClips[0];
+        else if (hitPoints > 0.45f && hitPoints <= 0.5f)
+            clip = m_reactorHealthClips[1];
+        else if (hitPoints > 0.2f && hitPoints <= 0.25f)
+            clip = m_reactorHealthClips[2];
+        else if (hitPoints < 0.2f)
         {
-            AudioClip clip = null;
+            int index = Random.Range(0, m_reactorHealthCriticalClips.Length);
+            clip = m_reactorHealthCriticalClips[index];
+        }
 
-            if (hitPoints > 0.7f && hitPoints <= 0.75f)
-                clip = m_reactorHealthClips[0];
-            else if (hitPoints > 0.45f && hitPoints <= 0.5f)
-                clip = m_reactorHealthClips[1];
-            else if (hitPoints > 0.2f && hitPoints <= 0.25f)
-                clip = m_reactorHealthClips[2];
-            else if (hitPoints < 0.2f)
-            {
-                int index = Random.Range(0, m_reactorHealthCriticalClips.Length - 1);
-                clip = m_reactorHealthCriticalClips[index];
-            }
-
-            if (clip != null)
-            {
-                m_voiceAudioSource.clip = clip;
-                m_voiceAudioSource.Play();
-            }
+        if (clip != null)
+        {
+            m_voiceAudioSource.clip = clip;
+            m_voiceAudioSource.Play();
         }
     }
 
@@ -48,9 +48,9 @@ public class VoiceQuips : MonoBehaviour
     {
         float probability = Random.Range(0.0f, 1.0f);
 
-        if (!m_voiceAudioSource.isPlaying && probability > 0.5f)
+        if (!m_voiceAudioSource.isPlaying && probability > 0.7f)
         {
-            int index = Random.Range(0, m_playerHealthClips.Length - 1);
+            int index = Random.Range(0, m_playerHealthClips.Length);
             m_voiceAudioSource.clip = m_playerHealthClips[index];
             m_voiceAudioSource.Play();
         }
@@ -59,8 +59,11 @@ public class VoiceQuips : MonoBehaviour
     public void PlayLevelUpClip()
     {
         if (!m_voiceAudioSource.isPlaying)
+            m_voiceAudioSource.Stop();
+
+        if (!m_voiceAudioSource.isPlaying)
         {
-            int index = Random.Range(0, m_playerLevelUpClips.Length - 1);
+            int index = Random.Range(0, m_playerLevelUpClips.Length);
             m_voiceAudioSource.clip = m_playerLevelUpClips[index];
             m_voiceAudioSource.Play();
         }
@@ -69,8 +72,11 @@ public class VoiceQuips : MonoBehaviour
     public void PlayWaveCompleteClip()
     {
         if (!m_voiceAudioSource.isPlaying)
+            m_voiceAudioSource.Stop();
+
+        if (!m_voiceAudioSource.isPlaying)
         {
-            int index = Random.Range(0, m_waveCompleteClips.Length - 1);
+            int index = Random.Range(0, m_waveCompleteClips.Length);
             m_voiceAudioSource.clip = m_waveCompleteClips[index];
             m_voiceAudioSource.Play();
         }

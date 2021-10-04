@@ -71,9 +71,9 @@ public class WaveController : MonoBehaviour
         {
             GameObject prefab = null;
 
-            int lightEnemyIndex = Random.Range(0, m_lightEnemyPrefabs.Length - 1);
-            int heavyEnemyIndex = Random.Range(0, m_heavyEnemyPrefabs.Length - 1);
-            int spawnPointIndex = Random.Range(0, m_spawnPoints.Length - 1);
+            int lightEnemyIndex = Random.Range(0, m_lightEnemyPrefabs.Length);
+            int heavyEnemyIndex = Random.Range(0, m_heavyEnemyPrefabs.Length);
+            int spawnPointIndex = Random.Range(0, m_spawnPoints.Length);
 
             float heavyProbability = Random.Range(0.0f, 1.0f);
 
