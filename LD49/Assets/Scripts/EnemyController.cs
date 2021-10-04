@@ -16,6 +16,8 @@ public class EnemyController : VehicleController
     {
         m_currentHitPoints = m_maxHitPoints;
         m_agent = GetComponent<NavMeshAgent>();
+        m_destructionAudioSource = GetComponent<AudioSource>();
+        m_destructionAudioSource.pitch = m_destructionAudioSource.pitch + Random.Range(-0.2f, 0.2f);
 
         Vector2 rnd = Random.insideUnitCircle;
         Vector3 offset = new Vector3(rnd.x, 0.0f, rnd.y).normalized * m_targetRadius;

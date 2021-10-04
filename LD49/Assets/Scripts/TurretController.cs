@@ -13,16 +13,22 @@ public class TurretController : MonoBehaviour
     public GameObject m_root;
     public ParticleSystem m_destructionParticleSystem;
     public MeshRenderer m_healthBar;
+    public GameObject m_meshGameObject;
+    public GameObject m_healthBarGameObject;
+    public AudioSource m_destructionAudioSource;
     public int m_powerDraw = 0;
 
     private float m_hitPoints = 0.0f;
     private Collider[] m_colliderBuffer;
     private GameObject m_trackedTarget = null;
     private Transform m_transform;
-
+    
     // Start is called before the first frame update
     void Start()
     {
+        if (m_destructionAudioSource)
+            m_destructionAudioSource.pitch = m_destructionAudioSource.pitch + Random.Range(-0.2f, 0.2f);
+
         m_hitPoints = m_maxHitPoints;
         m_transform = GetComponent<Transform>();
         m_colliderBuffer = new Collider[32];
@@ -68,11 +74,11 @@ public class TurretController : MonoBehaviour
 
     public void TakeDamage(float dmg)
     {
-        if (m_root && m_destructionParticleSystem)
+        if (m_root && m_destructionParticleSystem && m_hitPoints > 0.0f)
         {
             m_hitPoints -= dmg;
 
-            if (m_hitPoints < 0.0f)
+            if (m_hitPoints <= 0.0f)
             {
                 m_hitPoints = 0.0f;
                 StartCoroutine("EmitDestructionParticles");
@@ -101,8 +107,8 @@ public class TurretController : MonoBehaviour
                 }
             }
 
-            if (m_trackedTarget != null)
-                Debug.Log("Tracked Target: " + m_trackedTarget.name);
+            //if (m_trackedTarget != null)
+            //    Debug.Log("Tracked Target: " + m_trackedTarget.name);
 
             yield return new WaitForSeconds(1.0f);
         }
@@ -111,8 +117,18 @@ public class TurretController : MonoBehaviour
     IEnumerator EmitDestructionParticles()
     {
         m_destructionParticleSystem.Play();
+
+        if (!m_destructionAudioSource.isPlaying)
+            m_destructionAudioSource.Play();
+
         yield return new WaitForSeconds(0.5f);
         PowerPlantController.sharedInstance.DecreasePowerDraw(m_powerDraw);
+
+        m_meshGameObject.SetActive(false);
+        m_healthBarGameObject.SetActive(false);
+
+        yield return new WaitForSeconds(m_destructionAudioSource.clip.length);
+
         Destroy(m_root);
     }
 }

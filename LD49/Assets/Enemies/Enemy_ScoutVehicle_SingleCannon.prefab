@@ -57,6 +57,7 @@ MonoBehaviour:
   m_root: {fileID: 0}
   m_destructionParticleSystem: {fileID: 0}
   m_healthBar: {fileID: 0}
+  m_powerDraw: 0
 --- !u!1 &2042733998231600849
 GameObject:
   m_ObjectHideFlags: 0
@@ -29086,6 +29087,7 @@ GameObject:
   - component: {fileID: 5298906932791020465}
   - component: {fileID: 5298906932791020464}
   - component: {fileID: 5298906932791020467}
+  - component: {fileID: 7988641940778888404}
   m_Layer: 7
   m_Name: Enemy_ScoutVehicle_SingleCannon
   m_TagString: Untagged
@@ -29136,8 +29138,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.88, y: 0.7, z: 1.21}
-  m_Center: {x: 0, y: 0.33, z: -0.26}
+  m_Size: {x: 0.88, y: 1.909468, z: 1.678982}
+  m_Center: {x: 0, y: 0.93473405, z: -0.025509}
 --- !u!195 &5298906932791020464
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -29173,9 +29175,106 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_destructionParticleSystem: {fileID: 2042733998213045353}
+  m_meshGameObject: {fileID: 6922730756399018825}
   m_maxHitPoints: 100
   m_movementSpeed: 2
   m_waveController: {fileID: 0}
+--- !u!82 &7988641940778888404
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7841632405045540117}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 1712809055982844086, guid: 19fed1d26ca4b9647b52b972e156e184, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 88cdc70e2e6e4aa49887342629c3d7c0, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &7405848175276731643
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29233,11 +29332,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc1fb661909885244bc20fdb5783e27f, type: 3}
---- !u!4 &5187640480155418411 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2393918449601582032, guid: fc1fb661909885244bc20fdb5783e27f, type: 3}
-  m_PrefabInstance: {fileID: 7405848175276731643}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &201188030628386930 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7209164453218251913, guid: fc1fb661909885244bc20fdb5783e27f, type: 3}
@@ -29249,3 +29343,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 937b1fbb43935454a941272291939102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &5187640480155418411 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2393918449601582032, guid: fc1fb661909885244bc20fdb5783e27f, type: 3}
+  m_PrefabInstance: {fileID: 7405848175276731643}
+  m_PrefabAsset: {fileID: 0}
