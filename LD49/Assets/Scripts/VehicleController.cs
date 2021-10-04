@@ -12,6 +12,8 @@ public class VehicleController : MonoBehaviour
     protected float m_currentHitPoints;
     protected AudioSource m_destructionAudioSource;
 
+    private bool m_droppedPickups = false;
+
     public bool IsDestroyed()
     {
         return m_currentHitPoints <= 0.0f;
@@ -43,8 +45,10 @@ public class VehicleController : MonoBehaviour
         m_meshGameObject.SetActive(false);
 
         // If this is a non-player vehicle (i.e AI) drop pickups
-        if (gameObject.tag != "Player" && m_currentHitPoints <= 0.0f)
+        if (gameObject.tag != "Player" && m_currentHitPoints <= 0.0f && !m_droppedPickups)
         {
+            m_droppedPickups = true;
+
             float pickupRandomRadius = 2.0f;
 
             GameObject coolant = PickupPool.sharedInstance.GetPooledCoolantPickup();
