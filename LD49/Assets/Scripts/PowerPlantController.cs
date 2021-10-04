@@ -42,6 +42,11 @@ public class PowerPlantController : MonoBehaviour
 
     public void TakeDamage(float damageAmount)
     {
+        TakeDamageInternal(damageAmount, true);
+    }
+
+    void TakeDamageInternal(float damageAmount, bool playQuip)
+    {
         if (!isDestroyed())
         {
             m_hitPoints -= damageAmount;
@@ -109,7 +114,7 @@ public class PowerPlantController : MonoBehaviour
         {
             m_stabilityDecayRate = m_baseStabilityDecayRate + (m_powerDraw / m_maxPowerDraw) * m_maxPowerDrawDecayRate;
 
-            TakeDamage(m_stabilityDecayRate);
+            TakeDamageInternal(m_stabilityDecayRate, false);
 
             UIController.sharedInstance.UpdateStabilityBar(m_hitPoints / m_maxHitPoints);
 

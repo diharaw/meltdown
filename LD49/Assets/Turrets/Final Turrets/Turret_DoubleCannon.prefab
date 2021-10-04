@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_effectiveRadius: 10
-  m_maxHitPoints: 1500
+  m_maxHitPoints: 2500
   m_rotationSpeed: 500
   m_effectiveLayer:
     serializedVersion: 2

@@ -28949,7 +28949,6 @@ MonoBehaviour:
   m_meshGameObject: {fileID: 6621771060807404985}
   m_maxHitPoints: 100
   m_movementSpeed: 2
-  m_waveController: {fileID: 0}
   m_engineAudioSource: {fileID: 3477919751746405915}
 --- !u!82 &748792351132041252
 AudioSource:
@@ -29433,7 +29432,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4369387368039994975, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
       propertyPath: m_timeBetweenShots
-      value: 0.1
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}

@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_effectiveRadius: 10
-  m_maxHitPoints: 1500
+  m_maxHitPoints: 2500
   m_rotationSpeed: 500
   m_effectiveLayer:
     serializedVersion: 2
@@ -711,6 +711,10 @@ PrefabInstance:
     - target: {fileID: 4369387368039994974, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4369387368039994975, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
+      propertyPath: m_timeBetweenShots
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4369387368039994976, guid: 8c5f7a352182a3a4dba81e5c61b8b18f, type: 3}
       propertyPath: OutputAudioMixerGroup

@@ -20,27 +20,35 @@ public class VoiceQuips : MonoBehaviour
 
     public void PlayReactorHealthClip(float hitPoints)
     {
-        if (!m_voiceAudioSource.isPlaying && hitPoints >= 0.25f)
-            m_voiceAudioSource.Stop();
-
-        AudioClip clip = null;
-
-        if (hitPoints > 0.7f && hitPoints <= 0.75f)
-            clip = m_reactorHealthClips[0];
-        else if (hitPoints > 0.45f && hitPoints <= 0.5f)
-            clip = m_reactorHealthClips[1];
-        else if (hitPoints > 0.2f && hitPoints <= 0.25f)
-            clip = m_reactorHealthClips[2];
-        else if (hitPoints < 0.2f)
+        if (!m_voiceAudioSource.isPlaying)
         {
-            int index = Random.Range(0, m_reactorHealthCriticalClips.Length);
-            clip = m_reactorHealthCriticalClips[index];
-        }
+            AudioClip clip = null;
 
-        if (clip != null)
-        {
-            m_voiceAudioSource.clip = clip;
-            m_voiceAudioSource.Play();
+            if (hitPoints >= 0.2f)
+            {
+                float probability = Random.Range(0.0f, 1.0f);
+
+                if (probability > 0.5f)
+                {
+                    if (hitPoints > 0.7f && hitPoints <= 0.75f)
+                        clip = m_reactorHealthClips[0];
+                    else if (hitPoints > 0.45f && hitPoints <= 0.5f)
+                        clip = m_reactorHealthClips[1];
+                    else if (hitPoints > 0.2f && hitPoints <= 0.25f)
+                        clip = m_reactorHealthClips[2]; 
+                }
+            }
+            else
+            {
+                int index = Random.Range(0, m_reactorHealthCriticalClips.Length);
+                clip = m_reactorHealthCriticalClips[index];
+            }
+
+            if (clip != null)
+            {
+                m_voiceAudioSource.clip = clip;
+                m_voiceAudioSource.Play();
+            }
         }
     }
 

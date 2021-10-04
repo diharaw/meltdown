@@ -22,14 +22,14 @@ public class Globals : MonoBehaviour
 
         m_xpLut[0] = 0.0f;
         m_xpLut[1] = 500.0f;
-        m_xpLut[2] = 750.0f;
-        m_xpLut[3] = 1000.0f;
-        m_xpLut[4] = 1250.0f;
-        m_xpLut[5] = 1500.0f;
-        m_xpLut[6] = 1750.0f;
-        m_xpLut[7] = 2000.0f;
-        m_xpLut[8] = 2250.0f;
-        m_xpLut[9] = 2500.0f;
+        m_xpLut[2] = 1000.0f;
+        m_xpLut[3] = 2000.0f;
+        m_xpLut[4] = 5000.0f;
+        m_xpLut[5] = 7500.0f;
+        m_xpLut[6] = 10000.0f;
+        m_xpLut[7] = 15000.0f;
+        m_xpLut[8] = 20000.0f;
+        m_xpLut[9] = 25000.0f;
         
         sharedInstance = this;
     }
