@@ -51,7 +51,10 @@ public class Globals : MonoBehaviour
 
     public float xpBarValue()
     {
-        return (m_xp - m_xpLut[m_level - 1]) / (m_xpLut[m_level] - m_xpLut[m_level - 1]);
+        if (m_level < 10)
+            return (m_xp - m_xpLut[m_level - 1]) / (m_xpLut[m_level] - m_xpLut[m_level - 1]);
+        else
+            return 0;
     }
 
     private void unlockUpgrades()

@@ -40,9 +40,12 @@ public class PlayerController : VehicleController
         UIController.sharedInstance.HighlightTurretIcon(m_currentTurretIndex);
         m_transform = GetComponent<Transform>();
         m_rigidbody = GetComponent<Rigidbody>();
+        m_destructionAudioSource = GetComponent<AudioSource>();
+        m_destructionAudioSource.pitch = m_destructionAudioSource.pitch + Random.Range(-0.2f, 0.2f);
         m_rightWeapon.SetActive(false);
         UIController.sharedInstance.UpdateXpBar(0);
         UIController.sharedInstance.UpdateLevelTxt(1);
+        UIController.sharedInstance.UpdateScrapTxt(m_availableScrap);
     }
 
     // Update is called once per frame

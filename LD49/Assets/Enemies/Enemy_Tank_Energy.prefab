@@ -28914,6 +28914,7 @@ GameObject:
   - component: {fileID: 844162357680988167}
   - component: {fileID: 844162357680988164}
   - component: {fileID: 844162357680988165}
+  - component: {fileID: 6731153651654204786}
   m_Layer: 7
   m_Name: Enemy_Tank_Energy
   m_TagString: Untagged
@@ -28964,8 +28965,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.82, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.51, z: 0}
+  m_Size: {x: 0.82, y: 1.8005762, z: 1.3742796}
+  m_Center: {x: 0, y: 0.9102881, z: 0.18713981}
 --- !u!195 &844162357680988164
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -29001,9 +29002,106 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_destructionParticleSystem: {fileID: 348429380939906289}
+  m_meshGameObject: {fileID: 2985478207555198519}
   m_maxHitPoints: 100
   m_movementSpeed: 1
   m_waveController: {fileID: 0}
+--- !u!82 &6731153651654204786
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2715641220932565527}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 1712809055982844086, guid: 19fed1d26ca4b9647b52b972e156e184, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 92d3259b6a9732e4ba3fb95331b2c95d, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2925933782029877536
 GameObject:
   m_ObjectHideFlags: 0
@@ -29115,6 +29213,7 @@ MonoBehaviour:
   m_root: {fileID: 0}
   m_destructionParticleSystem: {fileID: 0}
   m_healthBar: {fileID: 0}
+  m_powerDraw: 0
 --- !u!1 &2985478207555198519
 GameObject:
   m_ObjectHideFlags: 0
