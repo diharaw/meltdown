@@ -10,6 +10,12 @@ public class Menu : MonoBehaviour
     public GameObject m_optionsPanel;
     public GameObject m_creditsPanel;
     public Slider m_mouseSensitivitySlider;
+    public Texture2D m_mouseCursorTexture;
+
+    private void Start()
+    {
+        Cursor.SetCursor(m_mouseCursorTexture, Vector2.zero, CursorMode.Auto);    
+    }
 
     public void OnStartClicked()
     {

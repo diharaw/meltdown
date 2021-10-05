@@ -236,9 +236,6 @@ public class PlayerController : VehicleController
 
     public void OnQuit(InputAction.CallbackContext value)
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
-
         SceneManager.LoadScene(0);
     }
 
@@ -257,9 +254,6 @@ public class PlayerController : VehicleController
             Globals.sharedInstance.m_isGameOver = true;
             UIController.sharedInstance.m_gameOverPanel.SetActive(true);
             UIController.sharedInstance.m_txtGameOverScore.text = Globals.sharedInstance.m_xp.ToString();
-
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.Confined;
         }
     }
 

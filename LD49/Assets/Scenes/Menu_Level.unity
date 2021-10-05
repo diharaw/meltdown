@@ -2760,6 +2760,7 @@ MonoBehaviour:
   m_optionsPanel: {fileID: 1614189946}
   m_creditsPanel: {fileID: 1056756553}
   m_mouseSensitivitySlider: {fileID: 622736629}
+  m_mouseCursorTexture: {fileID: 2800000, guid: e71842b8bf686a548a3515eaa69d0702, type: 3}
 --- !u!1001 &682579834
 PrefabInstance:
   m_ObjectHideFlags: 0
